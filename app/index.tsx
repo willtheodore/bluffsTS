@@ -24,27 +24,25 @@ const App: React.FC = () => {
   const [user, setUser] = React.useState<BluffsUser | null>(null)
 
   React.useEffect(() => {
-    updateAuthContext()
+    firebase.auth().onAuthStateChanged(updateAuthContext)
   }, [])
 
-  const updateAuthContext = (): void => {
-    firebase.auth().onAuthStateChanged(async (authUser: User) => {
-      let isAdmin: boolean;
-      if (user) {
-        try {
-          const admins = await getAdmins()
-          const adminStatus = determineIfAdmin(authUser.uid, admins.data)
-          setUser({
-            isAdmin: adminStatus,
-            ...authUser
-          })
-        } catch (e) {
-        console.log("Error from 'updateAuthContext' in 'index.tsx'", e)
-        }
-      } else {
-        setUser(null)
+  const updateAuthContext = async (authUser: User) => {
+    let isAdmin: boolean;
+    if (authUser) {
+      try {
+        const admins = await getAdmins()
+        const adminStatus = determineIfAdmin(authUser.uid, admins.data)
+        setUser({
+          isAdmin: adminStatus,
+          ...authUser
+        })
+      } catch (e) {
+      console.log("Error from 'updateAuthContext' in 'index.tsx'", e)
       }
-    })
+    } else {
+      setUser(null)
+    }
   }
 
   const determineIfAdmin = (uid: string, admins: AdminsObject | undefined): boolean => {

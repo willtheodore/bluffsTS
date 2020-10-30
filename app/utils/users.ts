@@ -1,11 +1,10 @@
 import firebase, { firestore } from "../firebase";
 
 // Represents the object returned from an async API function. All async API functions will return a Promise with this object.
-interface ReturnObject<DataType> {
+export interface ReturnObject<DataType> {
   data?: DataType;
   message: string;
 }
-export type APIReturn<DataType> = Promise<ReturnObject<DataType>>;
 
 
 // Represents a User in the firestore database. Also includes the optional uid property (added during api requests)
@@ -18,7 +17,7 @@ export interface DatabaseUser {
 
 // Represents a user object from firebase authenticaion with the addition of the isAdmin property. 
 export type BluffsUser = IsAdmin & firebase.User;
-type IsAdmin = { isAdmin?: boolean };
+type IsAdmin = { isAdmin?: boolean }
 
 export interface AdminsObject {
   [key: string]: true;
@@ -27,6 +26,7 @@ export interface AdminsObject {
 type DocumentReference = firebase.firestore.DocumentReference
 type DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 type DocumentData = firebase.firestore.DocumentData;
+type APIReturn<DataType> = Promise<ReturnObject<DataType>>
 
 const APIReturn = Promise;
 const FieldPath = firebase.firestore.FieldPath;

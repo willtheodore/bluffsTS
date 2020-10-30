@@ -1,3 +1,4 @@
+import { update } from "lodash"
 import React from "react"
 import useHover from "../hooks/useHover"
 
@@ -43,27 +44,43 @@ function LoginContent({ setMode, dismiss }) {
   const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
+    updateStyling()
+  }, [email, password])
+
+  const updateStyling = () => {
     if (email.length < 1) { setEmailStyle({ color: "black" }) }
     if (password.length < 1) { setPasswordStyle({ color: "black" }) }
 
-    validateEmail(email)
-    .then(res => setEmailStyle({ color: "green" }))
-    .catch(err => {
-      setEmailStyle({ color: "red" })
-    })
-    validatePassword(password)
-    .then(res => setPasswordStyle({ color: "green" }))
-    .catch(err => {
-      setPasswordStyle({ color: "red" })
-    })
-  }, [email, password])
+    try {
+      if (validateEmail(email)) {
+        setEmailStyle({ color: "green"})
+      }
+      if (validatePassword(password)) {
+        setPasswordStyle({ color: "red" })
+      }
+    } catch (e) {
+      if (e.message === "Invalid email" ) {
+        setEmailStyle({ color: "red" })
+      } else if (e.message === "Invalid password" ) {
+        setPasswordStyle({ color: "red" })
+      } else {
+        setEmailStyle({ color: "red" })
+        setPasswordStyle({ color: "red" })
+      }
+    }
+  }
 
-  const handleSubmit = () => {
-    validateEmail(email)
-    .then(() => validatePassword(password))
-    .then(() => signInUser(email, password))
-    .then(() => dismiss())
-    .catch(err => setError(err))
+  const handleSubmit = async () => {
+    try {
+      const validEmail = validateEmail(email)
+      const validPassword = validatePassword(password)
+      if (validEmail && validPassword) {
+        await signInUser(email, password)
+        dismiss()
+      } 
+    } catch (e) {
+      setError(e.message)
+    }
   }
 
   return (
@@ -108,22 +125,30 @@ function CreateContent({ setMode, dismiss }) {
   const firstName = React.useRef(null)
   const lastName = React.useRef(null)
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     const eVal = email.current.value
     const pVal = password.current.value
     const firstVal = firstName.current.value
     const lastVal = lastName.current.value
 
-    confirmNotEmpty([firstVal, lastVal, eVal, pVal])
-    .then(() => confirmMatch(eVal, confirmEmail.current.value, "email"))
-    .then(() => confirmMatch(pVal, confirmPassword.current.value, "password"))
-    .then(() => validateEmail(eVal))
-    .then(() => validatePassword(pVal))
-    .then(() => createAccount(eVal, pVal))
-    .then(() => addName(firstVal, lastVal))
-    .then(() => addUserToFirestore(eVal, firstVal, lastVal))
-    .then(() => dismiss())
-    .catch(err => setError(err))
+    try {
+      const notEmpty = confirmNotEmpty([firstVal, lastVal, eVal, pVal])
+      const emailsMatch = eVal === confirmEmail.current.value
+      const passwordsMatch = pVal === confirmPassword.current.value
+      const validEmail = validateEmail(eVal)
+      const validPassword = validatePassword(pVal)
+
+      if (notEmpty && emailsMatch && passwordsMatch && validEmail && validPassword) {
+        await createAccount(eVal, pVal)
+        await addName(firstVal, lastVal)
+        await addUserToFirestore(eVal, firstVal, lastVal)
+        dismiss()
+      } else {
+        throw Error("Fields do not contain valid information. Make sure emails and passwords match and nothing is left blank.")
+      }
+    } catch (e) {
+      setError(e.message)
+    }
   }
 
   return (
