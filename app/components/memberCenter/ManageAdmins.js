@@ -1,6 +1,6 @@
 import React from "react"
 import { FaAngleDown, FaTrash } from "react-icons/fa"
-import { removeUserFromAdmins, getAdmins, getUsersByIds, searchUserByEmail, addUserToAdmins } from "../../utils/users.js"
+import { removeUserFromAdmins, getAdmins, getUsersByIds, searchForUserByEmail, addUserToAdmins } from "../../utils/users"
 
 export default function ManageAdmins({ user }) {
   const [admins, setAdmins] = React.useState(null)
@@ -38,7 +38,7 @@ export default function ManageAdmins({ user }) {
   }
 
   const handleSearch = () => {
-    searchUserByEmail(newAdmin.current.value)
+    searchForUserByEmail(newAdmin.current.value)
     .then(result => setResult(result))
     .catch(err => setResult(err))
   }

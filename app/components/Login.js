@@ -1,8 +1,8 @@
 import React from "react"
-import useHover from "../hooks/useHover.js"
+import useHover from "../hooks/useHover"
 
-import { validateEmail, validatePassword, signInUser, createAccount, confirmMatch, confirmNotEmpty, addName } from "../utils/authentication.js"
-import { addUserToFirestore } from "../utils/users.js"
+import { validateEmail, validatePassword, signInUser, createAccount, confirmMatch, confirmNotEmpty, addName } from "../utils/authentication"
+import { addUserToFirestore } from "../utils/users"
 
 export function FormInput({ setValue = null, style = null, labelText, type = "text", reference = null }) {
 
