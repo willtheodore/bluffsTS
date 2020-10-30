@@ -1,0 +1,119 @@
+@import "./mixins.scss";
+@import "./colors.scss";
+
+@mixin baseWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 100px 3vw 3vw;
+
+  .info-header {
+    display: grid;
+    grid-template-rows: 1fr;
+
+    .header-text {
+      grid-row: 1/2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      @include header-large;
+      color: white;
+    }
+
+    p {
+      @include body;
+    }
+
+    img {
+      grid-row: 1/2;
+      border-style: solid;
+      border-width: 3px;
+      border-color: white;
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      margin: 10px 0;
+    }
+  }
+
+  .body-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    .text-wrapper {
+      flex: 3 400px;
+    }
+
+    .body-image {
+      margin-top: 10px;
+      align-self: center;
+      object-fit: cover;
+      flex: 1 200px;
+      border-width: 3px;
+      border-color: white;
+      border-style: solid;
+    }
+  }
+}
+
+#info-wrapper-left {
+  @include baseWrapper;
+
+  .info-header {
+    grid-template-columns: 450px 1fr;
+
+    p {
+      margin-right: 20px;
+    }
+
+    img {
+      grid-column: 2/3;
+    }
+  }
+
+  .header-text {
+    grid-column: 1/2;
+  }
+
+  .body-wrapper {
+    flex-direction: row;
+  }
+
+  .text-wrapper {
+    margin-right: 20px;
+  }
+}
+
+#info-wrapper-right {
+  @include baseWrapper;
+
+  .info-header {
+    grid-template-columns: 1fr 450px;
+
+    h1 {
+      margin-left: 20px;
+    }
+
+    p {
+      margin-left: 20px;
+    }
+
+    img {
+      grid-column: 1/2;
+    }
+  }
+
+  .header-text {
+    grid-column: 2/3;
+  }
+
+  .body-wrapper {
+    flex-direction: row-reverse;
+  }
+
+  .text-wrapper {
+    margin-left: 20px;
+  }
+}

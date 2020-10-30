@@ -1,0 +1,119 @@
+@import "./mixins.scss";
+
+.header-comp {
+  position: relative;
+
+  div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 150px;
+  }
+
+  h1 {
+    margin-left: 20px;
+    @include header-large;
+    color: white;
+  }
+}
+
+.modal-bg {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.37);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.modal-window {
+  background-color: white;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: $darkBlue;
+  border-style: solid;
+  position: fixed;
+  top: 250px;
+  left: calc(50% - calc(max(50vw, 400px) / 2));
+  z-index: 101;
+}
+
+.login {
+  width: max(50vw, 400px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  z-index: 101;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+
+    h3 {
+      background-color: $lightBlue;
+      @include header-small;
+      color: white;
+      padding: 0 10px;
+      margin: 10px;
+    }
+
+    .error {
+      color: $brightRed;
+      margin: 10px;
+      font-family: "heebo-light";
+      font-size: 14px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+  }
+}
+
+.btn-bold-red {
+  font-family: "heebo-bold";
+  border-radius: 10px;
+  margin-left: 20px;
+  background: $brightRed;
+  color: white;
+}
+
+.btn-bold-muted {
+  font-family: "heebo-bold";
+  border-radius: 10px;
+  margin-left: 20px;
+  background: $mutedRed;
+  color: $brightRed;
+}
+
+.form-input {
+  display: flex;
+  margin: 10px 0;
+
+  label {
+    text-align: right;
+    flex-basis: 172px;
+    @include body;
+  }
+
+  input {
+    flex-grow: 2;
+    margin: 0 10px;
+    @include body;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-width: 2px;
+    border-color: black;
+  }
+
+  input:focus {
+    outline: none;
+  }
+}

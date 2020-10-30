@@ -1,0 +1,93 @@
+@import "./mixins.scss";
+@import "./colors.scss";
+@import "./fonts.scss";
+
+#contact-wrapper {
+  margin: 100px 0 0;
+
+  .header-comp {
+    z-index: 2;
+  }
+
+  .content-wrapper {
+    margin: 0 20px;
+    padding: 100px 0 0;
+    position: relative;
+    top: -75px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    label {
+      text-align: right;
+      margin-right: 10px;
+      margin-top: 15px;
+    }
+
+    textarea {
+      flex-basis: 63%;
+      height: min(500px, 80vh);
+      background: $mutedRed;
+      font-family: "heebo-regular";
+      font-size: 18px;
+      border: none;
+      border-radius: 7px;
+      margin: 20px 20px 20px 0;
+      padding: 10px;
+    }
+
+    textarea:focus {
+      outline: none;
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 20px 20px 0;
+
+    button {
+      background: $brightRed;
+      color: white;
+      font-family: "heebo-bold";
+    }
+  }
+}
+
+.line-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  label {
+    text-align: right;
+    margin-right: 10px;
+  }
+
+  input {
+    flex-basis: 65%;
+    font-family: "heebo-medium";
+    font-size: 18px;
+    border-bottom-width: 5px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-color: $brightRed;
+    margin-right: 25px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+}
+
+.bold-label {
+  font-family: "heebo-bold";
+  font-size: 36px;
+}

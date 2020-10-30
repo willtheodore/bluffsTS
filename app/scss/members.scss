@@ -1,0 +1,272 @@
+@import "./mixins.scss";
+@import "./colors.scss";
+
+#members-wrapper {
+  margin-top: 100px;
+
+  .header-comp {
+    z-index: 2;
+  }
+
+  .content-wrapper {
+    position: relative;
+    top: -75px;
+    padding: 100px 0 25px 25px;
+    margin: 0 20px 400px;
+
+    h2 {
+      @include header-medium;
+    }
+  }
+}
+//----------------------------------
+#member-center {
+  margin-top: 100px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    @include header-large;
+    color: white;
+  }
+
+  .sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .sidebar {
+    background-color: $mutedYellow;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    border-radius: 10px;
+    padding: 5px 0;
+    overflow: hidden;
+
+    .sidebar-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 5px;
+
+      a,
+      svg {
+        margin: 0 10px;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      a {
+        @include body;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  #post-detail {
+    width: 70%;
+  }
+
+  //----------------------------------
+  #center-flow {
+    display: flex;
+    flex-direction: row;
+
+    #recent-posts {
+      height: 100%;
+      width: 100%;
+    }
+
+    #archive {
+      height: 100%;
+      width: 100%;
+
+      .selector {
+        margin: 0 20px 10px;
+      }
+    }
+
+    #calendar {
+      height: 100%;
+      width: 100%;
+    }
+
+    #sign-ups {
+      height: 100%;
+      width: 100%;
+    }
+
+    #account {
+      height: 100%;
+      width: 100%;
+    }
+
+    #admin {
+      height: 100%;
+      width: 100%;
+
+      .selector {
+        margin: 0 20px 10px;
+        width: 60%;
+      }
+
+      //----------------------------------
+      #create-post {
+        margin: 0 20px 80px;
+
+        .form-input {
+          justify-content: flex-start;
+          margin: 0;
+
+          label {
+            font-family: "heebo-bold";
+            text-align: left;
+            flex-basis: auto;
+          }
+        }
+      }
+      //----------------------------------
+      #manage-posts {
+        margin: 0 20px 200px;
+
+        h2,
+        hr {
+          font-family: "heebo-bold";
+          font-size: 48px;
+          color: white;
+        }
+
+        hr {
+          margin-top: 0;
+        }
+
+        .manage-posts-header {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          button {
+            margin-left: 20px;
+          }
+        }
+
+        #edit-post {
+          .form-input {
+            display: flex;
+            justify-content: flex-start;
+
+            label {
+              font-family: "heebo-bold";
+              font-size: 18px;
+              text-align: left;
+              flex-basis: auto;
+            }
+
+            input {
+              font-family: "heebo-regular";
+              font-size: 18px;
+              border: none;
+              border-bottom: 2px solid black;
+            }
+          }
+        }
+
+        .posts {
+          li {
+            display: flex;
+            width: 100%;
+          }
+
+          .blog-post-container {
+            width: 100%;
+          }
+
+          .success-message {
+            width: 100%;
+            margin: 0 20px;
+          }
+
+          div {
+            display: flex;
+            flex-direction: column;
+            color: $brightRed;
+
+            button,
+            svg {
+              margin-bottom: 20px;
+            }
+          }
+        }
+      }
+      //----------------------------------
+      #calendar-events {}
+      //----------------------------------
+      #manage-admins {
+        margin: 0 20px;
+
+        .content-wrapper {
+          margin-bottom: 20px;
+        }
+
+        span {
+          display: flex;
+          align-items: center;
+
+          h3 {
+            flex-grow: 1;
+            font-family: "heebo-bold";
+            font-size: 18px;
+          }
+        }
+
+        .admin-list {
+          li {
+            display: flex;
+            flex-grow: 1;
+            border-bottom: 2px solid $darkBlue;
+            margin: 0 10px;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+
+            p {
+              flex-grow: 1;
+            }
+          }
+        }
+
+        .input-field {
+          width: 100%;
+          display: flex;
+          margin-top: 10px;
+
+          input {
+            flex-grow: 1;
+            border: none;
+            background-color: $mutedRed;
+            font-family: "heebo-light";
+            font-size: 18px;
+            padding-left: 10px;
+          }
+
+          input:focus {
+            outline: none;
+          }
+        }
+
+        .results-field {
+          display: flex;
+
+          p {
+            flex-grow: 1;
+          }
+        }
+      }
+    }
+  }
+}

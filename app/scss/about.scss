@@ -1,0 +1,30 @@
+@import "./mixins.scss";
+@import "./colors.scss";
+
+#about-wrapper {
+  margin: 100px 0 0;
+
+  .header-comp {
+    z-index: 1;
+  }
+
+  .content-wrapper {
+    position: relative;
+    top: -95px;
+    margin: 20px;
+  }
+
+  .first-p {
+    margin-top: 75px;
+  }
+
+  img {
+    @include white-border;
+    border-color: $lightBlue;
+    width: min(500px, 40vw);
+    height: min(350px, 30vw);
+    object-fit: cover;
+    z-index: 2;
+    margin-left: 10px;
+  }
+}

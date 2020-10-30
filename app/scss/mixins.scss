@@ -1,0 +1,42 @@
+@import "./fonts.scss";
+
+@mixin header-large {
+  font-family: "heebo-medium";
+  font-size: 90px;
+}
+
+@mixin header-medium {
+  font-family: "heebo-medium";
+  font-size: 64px;
+}
+
+@mixin header-small {
+  font-family: "heebo-medium";
+  font-size: 48px;
+}
+
+@mixin body {
+  font-family: "heebo-regular";
+  font-size: 18px;
+}
+
+@mixin text-button {
+  font-family: "heebo-bold";
+  font-size: 24px;
+}
+
+@mixin menu-title {
+  font-family: "heebo-regular";
+  font-size: 24px;
+}
+
+@mixin subheader {
+  font-family: "heebo-regular";
+  font-size: 36px;
+}
+
+@mixin white-border {
+  border-width: 3px;
+  border-style: solid;
+  border-color: white;
+}
