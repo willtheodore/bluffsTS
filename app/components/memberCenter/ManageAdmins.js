@@ -1,6 +1,6 @@
 import React from "react"
 import { FaAngleDown, FaTrash } from "react-icons/fa"
-import { removeUserFromAdmins, getAdmins, getUsersByIds, searchUserByEmail, addUserToAdmins } from "../../utils/users"
+import { removeUserFromAdmins, getAdmins, getUsersByIds, searchUserByEmail, addUserToAdmins } from "../../utils/users.js"
 
 export default function ManageAdmins({ user }) {
   const [admins, setAdmins] = React.useState(null)

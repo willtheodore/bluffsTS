@@ -1,14 +1,14 @@
 import React from "react"
 import { FaPencilAlt, FaEdit, FaLock, FaCalendar } from "react-icons/fa"
 import { Route, Switch, useLocation } from "react-router-dom"
-import AuthContext from "../../contexts/auth"
-import Selector from "../Selector"
-import { parsePath } from "../../utils/formatters"
+import AuthContext from "../../contexts/auth.js"
+import Selector from "../Selector.js"
+import { parsePath } from "../../utils/formatters.js"
 
-const CreatePost = React.lazy(() => import("./CreatePost"))
-const CalendarEvents = React.lazy(() => import("./CalendarEvents"))
-const ManagePosts = React.lazy(() => import("./ManagePosts"))
-const ManageAdmins = React.lazy(() => import("./ManageAdmins"))
+const CreatePost = React.lazy(() => import("./CreatePost.js"))
+const CalendarEvents = React.lazy(() => import("./CalendarEvents.js"))
+const ManagePosts = React.lazy(() => import("./ManagePosts.js"))
+const ManageAdmins = React.lazy(() => import("./ManageAdmins.js"))
 
 export default function Admin() {
   const user = React.useContext(AuthContext)

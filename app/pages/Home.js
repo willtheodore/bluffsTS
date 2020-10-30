@@ -1,7 +1,7 @@
 import React from "react"
 import carousel from "../images/carousel1.jpg"
 
-import HorizonalBreakSm from "../vectors/HorizontalBreakSm"
+import HorizonalBreakSm from "../vectors/HorizontalBreakSm.js"
 
 // Main home page for the site
 export default function Home() {

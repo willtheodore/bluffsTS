@@ -1,9 +1,9 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
-import VerticalLine from "../vectors/VerticalLine"
-import Login from "../components/Login"
-import AuthContext from "../contexts/auth"
-import { signOut } from "../utils/authentication"
+import VerticalLine from "../vectors/VerticalLine.js"
+import Login from "../components/Login.js"
+import AuthContext from "../contexts/auth.js"
+import { signOut } from "../utils/authentication.js"
 
 const activeStyle = {
   textDecoration: "underline",

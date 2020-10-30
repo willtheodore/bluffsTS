@@ -2,17 +2,17 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import "./scss/index.scss"
-import { AuthProvider } from "./contexts/auth"
-import firebase from "./firebase"
-import { determineIfAdmin, getAdmins } from "./utils/users"
+import { AuthProvider } from "./contexts/auth.js"
+import firebase from "./firebase.js"
+import { determineIfAdmin, getAdmins } from "./utils/users.js"
 
-import Nav from "./components/Nav"
-import Footer from "./components/Footer"
-const Home = React.lazy(() => import("./pages/Home"))
-const Info = React.lazy(() => import("./pages/Info"))
-const About = React.lazy(() => import("./pages/About"))
-const Contact = React.lazy(() => import("./pages/Contact"))
-const Members = React.lazy(() => import("./pages/Members"))
+import Nav from "./components/Nav.js"
+import Footer from "./components/Footer.js"
+const Home = React.lazy(() => import("./pages/Home.js"))
+const Info = React.lazy(() => import("./pages/Info.js"))
+const About = React.lazy(() => import("./pages/About.js"))
+const Contact = React.lazy(() => import("./pages/Contact.js"))
+const Members = React.lazy(() => import("./pages/Members.js"))
 
 function App() {
   const [user, setUser] = React.useState(null)

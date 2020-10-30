@@ -1,4 +1,4 @@
-import firebase, { firestore } from "../firebase"
+import firebase, { firestore } from "../firebase.js"
 
 export function getUserById(id) {
   return new Promise((resolve, reject) => {

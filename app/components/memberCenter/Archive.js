@@ -1,8 +1,8 @@
 import React from "react"
-import { getPostsByDate, formatPosts } from "../../utils/blog"
+import { getPostsByDate, formatPosts } from "../../utils/blog.js"
 
-import Selector from "../Selector"
-import BlogPost from "../BlogPost"
+import Selector from "../Selector.js"
+import BlogPost from "../BlogPost.js"
 
 export default function Archive() {
   const [month, setMonth] = React.useState(null)
@@ -37,9 +37,9 @@ export default function Archive() {
         items={years}
         setState={setYear}
       />
-      {posts != null && posts.[`${month}/${year}`] != null && (
+      {posts != null && posts[`${month}/${year}`] != null && (
         <ul>
-          {posts.[`${month}/${year}`].map(post => (
+          {posts[`${month}/${year}`].map(post => (
             <li key={post.postId} >
               <BlogPost
                 title={post.title}

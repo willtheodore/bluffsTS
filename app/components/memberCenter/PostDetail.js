@@ -1,10 +1,10 @@
 import React from "react"
 import { useLocation } from "react-router-dom"
-import { setPostListenerById, formatPosts } from "../../utils/blog"
-import { parseSearch } from "../../utils/formatters"
+import { setPostListenerById, formatPosts } from "../../utils/blog.js"
+import { parseSearch } from "../../utils/formatters.js"
 
-import BlogPost from "../BlogPost"
-import Comments from "../Comments"
+import BlogPost from "../BlogPost.js"
+import Comments from "../Comments.js"
 
 export default function PostDetail() {
   const [post, setPost] = React.useState(null)

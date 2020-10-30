@@ -1,7 +1,7 @@
 import React from "react"
-import { addNewPost } from "../../utils/blog"
-import { addPostToUserObject } from "../../utils/users"
-import { FormInput } from "../Login"
+import { addNewPost } from "../../utils/blog.js"
+import { addPostToUserObject } from "../../utils/users.js"
+import { FormInput } from "../Login.js"
 
 
 export default function CreatePost({ user }) {

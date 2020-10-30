@@ -1,4 +1,4 @@
-import firebase from "../firebase"
+import firebase from "../firebase.js"
 
 const expandedChars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',

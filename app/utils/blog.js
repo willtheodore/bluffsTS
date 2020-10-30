@@ -1,6 +1,6 @@
 import _ from "lodash"
-import firebase, { firestore } from "../firebase"
-import { formatDateForDescription } from "./formatters"
+import firebase, { firestore } from "../firebase.js"
+import { formatDateForDescription } from "./formatters.js"
 
 // Returns a promise containing a JSON object containing the data for a single post document
 // that matches the document ID passed to the function. A rejected result contains the error.

@@ -1,6 +1,6 @@
 import React from "react"
 
-import Header from "../components/Header"
+import Header from "../components/Header.js"
 
 export default function Contact() {
   const name = React.useRef("")

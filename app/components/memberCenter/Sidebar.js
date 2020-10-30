@@ -1,8 +1,8 @@
 import React from "react"
 import { FaChevronRight, FaNewspaper, FaBox, FaCalendarAlt, FaPenSquare, FaUserAlt, FaUserTie } from "react-icons/fa"
 import { Link, useLocation } from "react-router-dom"
-import AuthContext from "../../contexts/auth"
-import { parsePath } from "../../utils/formatters"
+import AuthContext from "../../contexts/auth.js"
+import { parsePath } from "../../utils/formatters.js"
 
 function SidebarItem({ title, isActive, children, to }) {
   let style = {}

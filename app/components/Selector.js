@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Link, useLocation } from "react-router-dom"
-import { parsePath } from "../utils/formatters"
+import { parsePath } from "../utils/formatters.js"
 
 /**
  * A component that displays a horizontal bar from which users can select different options

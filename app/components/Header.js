@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import AboutHeader from "../vectors/AboutHeader"
-import ContactHeader from "../vectors/ContactHeader"
-import MembersHeader from "../vectors/MembersHeader"
+import AboutHeader from "../vectors/AboutHeader.js"
+import ContactHeader from "../vectors/ContactHeader.js"
+import MembersHeader from "../vectors/MembersHeader.js"
 
 export default function Header({ text }) {
   return (

@@ -1,11 +1,11 @@
 import React from "react"
 import AuthContext from "../../contexts/auth"
 import { FaPencilAlt, FaTrash } from "react-icons/fa"
-import { getUserById, removePostFromUserObject } from "../../utils/users"
-import { setPostListenerByIds, formatPosts, deletePostById, updatePostTitleAndContent } from "../../utils/blog"
+import { getUserById, removePostFromUserObject } from "../../utils/users.js"
+import { setPostListenerByIds, formatPosts, deletePostById, updatePostTitleAndContent } from "../../utils/blog.js"
 
-import BlogPost from "../BlogPost"
-import { PostEditor } from "./CreatePost"
+import BlogPost from "../BlogPost.js"
+import { PostEditor } from "./CreatePost.js"
 
 export default function ManagePosts() {
   const user = React.useContext(AuthContext)

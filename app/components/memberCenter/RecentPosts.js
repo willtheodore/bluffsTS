@@ -1,7 +1,7 @@
 import React from "react"
-import { getRecentPosts, formatPosts } from "../../utils/blog"
+import { getRecentPosts, formatPosts } from "../../utils/blog.js"
 
-import BlogPost from "../BlogPost"
+import BlogPost from "../BlogPost.js"
 
 export default function RecentPosts() {
   const [posts, setPosts] = React.useState(null)

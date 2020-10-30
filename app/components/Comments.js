@@ -1,8 +1,8 @@
 import React from "react"
 import { FaTrash } from "react-icons/fa"
-import { formatComment } from "../utils/formatters"
-import { postComment, deleteCommentById } from "../utils/blog"
-import AuthContext from "../contexts/auth"
+import { formatComment } from "../utils/formatters.js"
+import { postComment, deleteCommentById } from "../utils/blog.js"
+import AuthContext from "../contexts/auth.js"
 
 export default function Comments({ comments, postId }) {
   const styles = {
