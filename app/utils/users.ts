@@ -23,9 +23,11 @@ export interface AdminsObject {
   [key: string]: true;
 }
 
-type DocumentReference = firebase.firestore.DocumentReference
-type DocumentSnapshot = firebase.firestore.DocumentSnapshot;
-type DocumentData = firebase.firestore.DocumentData;
+export type CollectionReference = firebase.firestore.CollectionReference;
+export type DocumentReference = firebase.firestore.DocumentReference
+export type DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+export type DocumentData = firebase.firestore.DocumentData;
+export type QuerySnapshot = firebase.firestore.QuerySnapshot;
 type APIReturn<DataType> = Promise<ReturnObject<DataType>>
 
 const APIReturn = Promise;
