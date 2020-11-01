@@ -1,4 +1,4 @@
-import { FSComment, Timestamp } from "./blog"
+import { FSComment, FSPost, Timestamp } from "./blog"
 
 export interface Search {
   [key: string]: string
@@ -25,6 +25,20 @@ export function formatDateForDescription(date: Timestamp): string {
   } else {
     return "MM/DD/YY at HH:MM AM"
   }
+}
+
+/**
+ * Formats posts by adding a "formattedDate" property
+ * 
+ * @param posts an array of post to format
+ * @returns {FSPost[]} an array of formatted posts
+ */
+export function formatPosts(posts: FSPost[]): FSPost[] {
+  let result = posts.slice()
+  for (const post of result) {
+      post.formattedDate = formatDateForDescription(post.datePosted)
+  }
+  return result
 }
 
 /**

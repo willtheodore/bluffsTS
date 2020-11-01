@@ -1,7 +1,7 @@
 import * as _ from "lodash"
 import firebase, { firestore } from "../firebase.js"
-import { formatDateForDescription } from "./formatters.js"
-import { DocumentSnapshot, QuerySnapshot, ReturnObject } from "./users.js"
+import { formatPosts } from "./formatters.js"
+import { DocumentReference, DocumentSnapshot, QuerySnapshot, ReturnObject } from "./users.js"
 
 export interface FSComment {
   author: string;
@@ -18,10 +18,12 @@ export interface FSPost {
   datePosted: Timestamp;
   month: number;
   year: number;
+  formattedDate?: string;
   postId?: string;
   comments?: { [key: string]: FSComment }
 }
 
+export type FSCommentCollection = { [key: string]: FSComment } | null
 export type PostsHandler = (posts: FSPost[]) => any
 export type PostHandler = (post: FSPost) => any
 export type VoidFunc = () => void
@@ -164,98 +166,132 @@ const getRecentPosts = async (quantity: number): APIReturn<FSPost[]> => {
   }
 }
 
-export function updatePostTitleAndContent(postId, title, content) {
-  return new Promise((resolve, reject) => {
-    firestore.collection("posts").doc(postId).update({
-      title: title,
-      content: content,
-    })
-    .then(docRef => resolve(docRef))
-    .catch(err => reject(err.message))
-  })
-}
-
-export function formatPosts(posts) {
-  let result = posts.slice()
-  for (const post of result) {
-    if (post) {
-      post.formattedDate = formatDateForDescription(post.datePosted)
+/**
+ * Updates the title and content for a given post ID
+ * 
+ * @param postId {string} the id of the post to update
+ * @param title {string} the new title for the post
+ * @param content {string} the new content for the post
+ * @returns {APIReturn<DocumentReference>} a Promise containing the document reference for the post and a success message
+ */
+export const updatePostTitleAndContent = async (postId: string, title: string, content: string): APIReturn<DocumentReference> => {
+  try {
+    const docRef = await firestore.collection("posts").doc(postId).update({ title, content })
+    return {
+      message: "success",
+      data: docRef
     }
+  } catch (e) {
+    console.log("Error from 'updatePostTitleAndContent' in 'blog.ts'", e)
+    throw e
   }
-  return result
 }
 
-export function addNewPost(uid, displayName, timestamp, title, content) {
-  return new Promise((resolve, reject) => {
-    firestore.collection("posts").add({
+/**
+ * Adds a new post to the firebase system.
+ * 
+ * @param uid {string} the id of the user writing the post
+ * @param displayName {string} the display name of the user writing the post
+ * @param timestamp {Date} a JS Date representing the time the post was written
+ * @param title {string} the title for the post
+ * @param content {string} the content of the post
+ * @returns {APIReturn<DocumentReference>} a Promise conaining the document reference of the new post and a success message
+ */
+export const addNewPost = async (uid: string, 
+                                 displayName: string, 
+                                 timestamp: Date, 
+                                 title: string,
+                                 content: string): APIReturn<DocumentReference> => {
+  try {
+    const docRef = await firestore.collection("posts").add({
       author: uid,
       authorName: displayName,
       title: title,
       content: content,
       datePosted: timestamp,
       month: timestamp.getMonth(),
-      year: timestamp.getYear(),
+      year: timestamp.getFullYear()
     })
-    .then(docRef => resolve(docRef))
-    .catch(err => reject(err.message))
-  })
+    return { message: "success", data: docRef }
+  } catch (e) {
+    console.log("Error from 'addNewPost' in 'blog.ts'", e)
+    throw e
+  }
 }
 
-export function postComment({ postId, uid, displayName, timestamp, content, comments = null }) {
-  return new Promise((resolve, reject) => {
-    const newCommentKey = timestamp.getTime().toString()
-    firestore.collection("posts").doc(postId).update({
+/**
+ * Posts a comment by updating the document for the correpsonding post
+ * 
+ * @param postId {string} the id of the post where the comment was posted
+ * @param uid {string} the id of the user that wrote the comment
+ * @param displayName {string} the display name of the user that wrote the comment
+ * @param timestamp {Date} the time the comment was posted
+ * @param content {string} the content of the post
+ * @param comments {FSCommentCollection} the comments that have been previously posted on this post
+ * @returns {APIReturn<DocumentReference>} a Promise containing the document reference for the post and a success message
+ */
+export const postComment = async (postId: string,
+                                  uid: string,
+                                  displayName: string,
+                                  timestamp: Date,
+                                  content: string,
+                                  comments: FSCommentCollection): APIReturn<DocumentReference> => {
+  try {
+    const docRef = await firestore.collection("posts").doc(postId).update({
       comments: {
-        [newCommentKey]: {
-          "author": uid,
-          "authorName": displayName,
-          "datePosted": timestamp,
-          "content": content,
+        [timestamp.getTime().toString()]: {
+          author: uid,
+          authorName: displayName,
+          datePosted: timestamp,
+          content: content
         },
         ...comments
       }
     })
-    .then(docRef => resolve(docRef))
-    .catch(err => reject(err.message))
-  })
+    return { message: "success", data: docRef }
+  } catch (e) {
+    console.log("Error from 'postComment' in 'blog.ts'", e)
+    throw e
+  }
 }
 
-export function deleteCommentById(postId, id, comments) {
-  return new Promise((resolve, reject) => {
-    const oldCommentKey = `comments.${id}`
-    firestore.collection("posts").doc(postId).update({
-      [oldCommentKey]: firebase.firestore.FieldValue.delete()
+/**
+ * Deletes a comment from a post based on its ID.
+ * 
+ * @param postId {string} the id of the post where the comment was posted
+ * @param commentId {string} the id of the comment to delete
+ * @returns {APIReturn<DocumentReference>} a Promise containing the document reference for the post and a success message
+ */
+export const deleteCommentById = async (postId: string, commentId: string): APIReturn<DocumentReference> => {
+  try {
+    const docRef = await firestore.collection("posts").doc(postId).update({
+      [`comments.${commentId}`]: FieldValue.delete()
     })
-    .then(docRef => resolve(docRef))
-    .catch(err => reject(err.message0))
-  })
+    return { message: "success", data: docRef }
+  } catch (e) {
+    console.log("Error from 'deleteCommentById' in 'blog.ts'", e)
+    throw e
+  }
 }
 
-// Returns a promise containing all matching posts in a given month and year. A rejected result contains
-// the error.
-export function getPostsByDate(month, year) {
-  return new Promise((resolve, reject) => {
+export const getPostsByDate = async (month: string, year: number) => {
+  try {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     const monthNum = months.indexOf(month)
-    if (monthNum < 0) { reject("Invalid month") }
-    let result = new Array()
-    firestore.collection("posts")
-    .where("month", "==", monthNum)
-    .where("year", "==", (year - 2000 + 100))
-    .get()
-    .then(posts => {
-      posts.forEach(post => {
-        let postData = post.data()
-        result.push({
-          postId: post.id,
-          ...postData
-        })
+    if (monthNum < 0) { throw Error("Invalid month") }
+    const posts = await firestore.collection("posts").where("month", "==", monthNum).where("year", "==", year).get()
+    let result: FSPost[] = []
+    posts.forEach((post: DocumentSnapshot) => {
+      result.push({
+        postId: post.id,
+        ...post.data()
       })
-      debugger;
-      result = _.sortBy(result, ["datePosted"])
-      _.reverse(result)
-      resolve(result)
     })
-    .catch(err => reject(err.message))
-  })
+    result = _.sortBy(result, ["datePosted"])
+    _.reverse(result)
+    return result
+  } catch (e) {
+    console.log("Error from 'getPostsByDate' in 'blog.ts'", e)
+    throw e
+  }
 }
