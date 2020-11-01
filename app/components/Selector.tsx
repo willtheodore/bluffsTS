@@ -1,19 +1,22 @@
-import React from "react"
+import * as React from "react"
+import { ReactElement, Fragment, useState, useEffect } from "react"
 
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { parsePath } from "../utils/formatters.js"
 
-/**
- * A component that displays a horizontal bar from which users can select different options
- *
- * @param {String}   [color]           OPTIONAL: the background color for the selector
- * @param {String}   [selectedColor]   OPTIONAL: the background color of the selected element
- * @param {String}   [title]           OPTIONAL: a title to include at the beginning of the selector
- * @param {String}   [fontSize]        OPTIONAL: the fontSize for within the selector
- * @param {String}   [preSelected]     OPTIONAL: the item in the array to be first selected
- * @param {String[]} items             REQUIRED: an array of strings indicating the options to choose from
- * @param {function} setState          REQUIRED: a function that will set the state to be equal to the value chosen
- */
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>
+interface SelectorProps {
+  color: string;
+  selectedColor: string;
+  title: string | null;
+  fontSize: string | null;
+  preSelected: string | null;
+  icons: JSX.Element[] | null;
+  setState: SetState<string> | null;
+  linkDestinations: string[] | null;
+  items: string[];
+}
+
 export default function Selector({ color = "#FFFFF3",
                                    selectedColor = "#FFCED4",
                                    title = null,
@@ -22,16 +25,17 @@ export default function Selector({ color = "#FFFFF3",
                                    icons = null,
                                    setState = null,
                                    linkDestinations = null,
-                                   items }) {
-  const [selected, setSelected] = React.useState(null)
-  const path = parsePath(useLocation())
+                                   items }: SelectorProps) {
 
-  React.useEffect(() => {
+  const [selected, setSelected] = useState<string | null>(null)
+  const path = parsePath(document.location)
+
+  useEffect(() => {
     if (preSelected != null) { setSelected(preSelected) }
-    else if (!linkDestinations) { setSelected(items[0])}
+    else if (!linkDestinations) { setSelected(items[0]) }
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (linkDestinations) {
       const initial = path[path.length - 1]
       let index = 0
@@ -45,10 +49,9 @@ export default function Selector({ color = "#FFFFF3",
     }
   }, [linkDestinations])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (setState) {
       if (selected) { setState(selected) }
-      else { setState(null) }
     }
   }, [selected])
 
@@ -94,25 +97,25 @@ export default function Selector({ color = "#FFFFF3",
     }
   }
 
-  const getInnerContent = (index, item) => (
-    <React.Fragment>
+  const getInnerContent = (index: number, item: string): ReactElement => (
+    <Fragment>
       {icons != null && (
-        <React.Fragment>
+        <Fragment>
           {icons[index]}
           <div style={{width: "10px", display: "block"}}></div>
-        </React.Fragment>
+        </Fragment>
       )}
       {item}
-    </React.Fragment>
+    </Fragment>
   )
 
   return (
     <div style={styles.container} className="selector">
       {title &&  (
-        <React.Fragment>
+        <Fragment>
           <h4 style={styles.title}>{title}</h4>
           <hr style={styles.break}/>
-        </React.Fragment>
+        </Fragment>
       )}
       <ul style={styles.list}>
         {items.map((item, index) => {

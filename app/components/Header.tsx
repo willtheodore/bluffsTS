@@ -1,10 +1,14 @@
-import React from "react"
-import PropTypes from "prop-types"
+import * as React from "react"
+
 import AboutHeader from "../vectors/AboutHeader.js"
 import ContactHeader from "../vectors/ContactHeader.js"
 import MembersHeader from "../vectors/MembersHeader.js"
 
-export default function Header({ text }) {
+interface HeaderProps {
+  text: string;
+}
+
+export default function Header({ text }: HeaderProps) {
   return (
     <div className="header-comp">
       {text === "about" && <AboutHeader />}
@@ -15,8 +19,4 @@ export default function Header({ text }) {
       </div>
     </div>
   )
-}
-
-Header.propTypes = {
-  text: PropTypes.string.isRequired,
 }

@@ -1,9 +1,13 @@
-import React from "react"
+import * as React from "react"
+import { useState, useEffect, useContext, Fragment } from "react"
 import { NavLink } from "react-router-dom"
-import VerticalLine from "../vectors/VerticalLine"
-import Login from "../components/Login"
+
 import AuthContext from "../contexts/auth"
 import { signOut } from "../utils/authentication"
+import { BluffsUser } from "../utils/users"
+
+import VerticalLine from "../vectors/VerticalLine"
+import Login from "./Login"
 
 const activeStyle = {
   textDecoration: "underline",
@@ -11,11 +15,11 @@ const activeStyle = {
 }
 
 export default function Nav() {
-  const [loginShowing, setLoginShowing] = React.useState(false)
-  const user = React.useContext(AuthContext)
-  const [membersPath, setMembersPath] = React.useState("/members/")
+  const [loginShowing, setLoginShowing] = useState<boolean>(false)
+  const user = useContext<BluffsUser>(AuthContext)
+  const [membersPath, setMembersPath] = useState<string>("/members/")
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user != null) {
       setMembersPath("/members/recent")
     } else {
@@ -36,7 +40,7 @@ export default function Nav() {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       {loginShowing && <Login dismiss={dismiss}/>}
       <nav>
         <div className="logotype">
@@ -77,6 +81,6 @@ export default function Nav() {
           </button>
         </ul>
       </nav>
-    </React.Fragment>
+    </Fragment>
   )
 }

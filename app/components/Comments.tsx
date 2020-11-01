@@ -1,11 +1,31 @@
-import React from "react"
+import * as React from "react"
+import { CSSProperties, createRef, useState, useContext } from "react"
 import { FaTrash } from "react-icons/fa"
-import { formatComment } from "../utils/formatters.js"
-import { postComment, deleteCommentById } from "../utils/blog.js"
-import AuthContext from "../contexts/auth.js"
+import { isNull } from "lodash"
 
-export default function Comments({ comments, postId }) {
-  const styles = {
+import { formatComment } from "../utils/formatters.js"
+import { postComment, deleteCommentById, FSCommentCollection, FSComment } from "../utils/blog.js"
+import AuthContext from "../contexts/auth.js"
+import { BluffsUser } from "../utils/users.js"
+import { SetState } from "./Selector.js"
+
+interface CommentsProps {
+  comments: FSCommentCollection;
+  postId: string;
+}
+interface CommentProps {
+  comment: FSComment;
+  comments: FSCommentCollection;
+  uid: string;
+  postId: string;
+  setResult: SetState<string>;
+}
+export interface StyleSet {
+  [key: string]: CSSProperties
+}
+
+export default function Comments({ comments, postId }: CommentsProps) {
+  const styles: StyleSet = {
     comments: {
       display: "flex",
       flexDirection: "column",
@@ -45,43 +65,38 @@ export default function Comments({ comments, postId }) {
     },
   }
 
-  const newComment = React.useRef(null)
-  const [result, setResult] = React.useState(null)
-  const user = React.useContext(AuthContext)
+  const newComment = createRef<HTMLTextAreaElement>()
+  const [result, setResult] = useState<string | null>(null)
+  const user = useContext<BluffsUser>(AuthContext)
 
   const handleSubmit = () => {
+    if (isNull(newComment.current) ||
+        isNull(user) ) { return }
     const cVal = newComment.current.value
-    if (cVal && user && postId) {
-      const uid = user.uid
-      const authorName = user.displayName
-      const timestamp = new Date(Date.now())
-      const commentsObj = comments != undefined ? comments : null
-      postComment({
-        postId: postId,
-        uid: uid,
-        displayName: authorName,
-        timestamp: timestamp,
-        content: cVal,
-        comments: commentsObj
-      })
-      .then(success => {
-        setResult("success")
-        newComment.current.value = ""
-      })
-      .catch(err => setResult(err))
-    }
+    const uid = user.uid
+    const authorName = user.displayName
+    const timestamp = new Date(Date.now())
+    const commentsObj = comments != undefined ? comments : null
+
+    postComment(postId, uid, authorName, timestamp, cVal, commentsObj)
+    .then(() => {
+      setResult("success")
+      if (isNull(newComment.current)) { return }
+      newComment.current.value = ""
+    })
+    .catch(err => setResult(err))
   }
 
-  const getCommentsContent = commentsArray => {
+  const getCommentsContent = (postComments: FSCommentCollection) => {
     let content = []
-    for (const id in commentsArray) {
-      const comment = commentsArray[id]
+    for (const id in postComments) {
+      const comment = postComments[id]
       if (comment) {
         content.push(
           <li key={id}>
             <Comment
               comment={comment}
-              comments={commentsArray}
+              comments={postComments}
               uid={user.uid}
               postId={postId}
               setResult={setResult}
@@ -118,7 +133,7 @@ export default function Comments({ comments, postId }) {
   )
 }
 
-function Comment({ comment, uid, postId, comments, setResult }) {
+function Comment({ comment, uid, postId, comments, setResult }: CommentProps) {
   const styles = {
     container: {
       display: "flex",
@@ -152,12 +167,12 @@ function Comment({ comment, uid, postId, comments, setResult }) {
 
   const formattedComment = formatComment(comment)
   const commentId = comment.datePosted.toDate().getTime().toString()
-  const [confirmDelete, setConfirmDelete] = React.useState(false)
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     if (postId && uid === comment.author && comments[id] != null) {
       if (confirmDelete) {
-        deleteCommentById(postId, id, comments)
+        deleteCommentById(postId, id)
         .then(success => setResult("success"))
         .catch(err => setResult(err))
       } else {
@@ -167,14 +182,14 @@ function Comment({ comment, uid, postId, comments, setResult }) {
   }
 
   return (
-    <div className="content-wrapper" style={styles.container}>
-      <div style={styles.descriptionWrapper}>
-        <p style={styles.description}>{`posted by ${formattedComment.authorName} on ${formattedComment.formattedDate}`}</p>
+    <div className="content-wrapper" style={styles.container as CSSProperties}>
+      <div style={styles.descriptionWrapper as CSSProperties}>
+        <p style={styles.description as CSSProperties}>{`posted by ${formattedComment.authorName} on ${formattedComment.formattedDate}`}</p>
         {uid === comment.author && (
           !confirmDelete
           ? <FaTrash onClick={() => handleDelete(commentId)} className="pointer" />
           : (
-            <div style={styles.confirm}>
+            <div>
               <button className="btn btn-bold-muted" onClick={() => setConfirmDelete(false)}>BACK</button>
               <button className="btn btn-bold-red" onClick={() => handleDelete(commentId)}>CONFIRM</button>
             </div>

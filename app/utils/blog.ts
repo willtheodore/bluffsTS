@@ -23,10 +23,9 @@ export interface FSPost {
   comments?: { [key: string]: FSComment }
 }
 
-export type FSCommentCollection = { [key: string]: FSComment } | null
+export type FSCommentCollection = { [key: string]: FSComment }
 export type PostsHandler = (posts: FSPost[]) => any
 export type PostHandler = (post: FSPost) => any
-export type VoidFunc = () => void
 export type Timestamp = firebase.firestore.Timestamp
 type APIReturn<DataType> = Promise<ReturnObject<DataType>>
 
@@ -105,7 +104,7 @@ export const deletePostById = async (id: string): APIReturn<null> => {
  * @param handlePost {PostHandler} a callback function that gets passed the post listened to each time theres an update
  * @returns {VoidFunc} an unsubscriber. Call to stop the subscription.
  */
-export const setPostListenerById = (id: string, handlePost: PostHandler): VoidFunc =>  {
+export const setPostListenerById = (id: string, handlePost: PostHandler): VoidFunction =>  {
   const unsubscribe = firestore.collection("posts").doc(id).onSnapshot((doc: DocumentSnapshot) => {
     handlePost({
       postId: doc.id,
@@ -122,7 +121,7 @@ export const setPostListenerById = (id: string, handlePost: PostHandler): VoidFu
  * @param handlePosts {PostsHandler} a callback function that is fired any time theres an update on any of the posts with an id in the passed array
  * @returns {VoidFunc} an unsubscriber. Call to stop the subscriptions.
  */
-export const setPostListenerByIds = (ids: string[], handlePosts: PostsHandler): VoidFunc => {
+export const setPostListenerByIds = (ids: string[], handlePosts: PostsHandler): VoidFunction => {
   const unsubscriber = firestore.collection("posts").where(firebase.firestore.FieldPath.documentId(),"in", ids)
   .onSnapshot((posts: QuerySnapshot) => {
     let result: FSPost[] = []
@@ -227,7 +226,7 @@ export const addNewPost = async (uid: string,
  * @param displayName {string} the display name of the user that wrote the comment
  * @param timestamp {Date} the time the comment was posted
  * @param content {string} the content of the post
- * @param comments {FSCommentCollection} the comments that have been previously posted on this post
+ * @param comments {FSCommentCollection | null} the comments that have been previously posted on this post
  * @returns {APIReturn<DocumentReference>} a Promise containing the document reference for the post and a success message
  */
 export const postComment = async (postId: string,
@@ -235,7 +234,7 @@ export const postComment = async (postId: string,
                                   displayName: string,
                                   timestamp: Date,
                                   content: string,
-                                  comments: FSCommentCollection): APIReturn<DocumentReference> => {
+                                  comments: FSCommentCollection | null): APIReturn<DocumentReference> => {
   try {
     const docRef = await firestore.collection("posts").doc(postId).update({
       comments: {

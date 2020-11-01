@@ -1,11 +1,33 @@
-import { update } from "lodash"
-import React from "react"
+import { isNull } from "lodash"
+import * as React from "react"
+import { RefObject, CSSProperties, ChangeEvent, Fragment } from "react"
+
 import useHover from "../hooks/useHover"
-
-import { validateEmail, validatePassword, signInUser, createAccount, confirmMatch, confirmNotEmpty, addName } from "../utils/authentication"
+import { validateEmail, validatePassword, signInUser, createAccount, confirmNotEmpty, addName } from "../utils/authentication"
 import { addUserToFirestore } from "../utils/users"
+import { SetState } from "./Selector"
 
-export function FormInput({ setValue = null, style = null, labelText, type = "text", reference = null }) {
+export type InputEventHandler = (event: ChangeEvent<HTMLInputElement>) => void
+interface FormInputProps {
+  setValue?: InputEventHandler | null;
+  style?: CSSProperties;
+  type?: string;
+  reference?: RefObject<HTMLInputElement> | null;
+  labelText: string;
+}
+interface LoginContentProps {
+  setMode: SetState<string>;
+  dismiss: VoidFunction;
+}
+interface LoginProps {
+  dismiss: VoidFunction;
+}
+
+export function FormInput({ setValue = null, 
+                            style = {}, 
+                            type = "text", 
+                            reference = null,
+                            labelText }: FormInputProps) {
 
   if (setValue) return (
     <div className="form-input">
@@ -36,12 +58,12 @@ export function FormInput({ setValue = null, style = null, labelText, type = "te
   )
 }
 
-function LoginContent({ setMode, dismiss }) {
-  const [email, setEmail] = React.useState("")
-  const [password, setPassword] = React.useState("")
-  const [emailStyle, setEmailStyle] = React.useState({ color: "black" })
-  const [passwordStyle, setPasswordStyle] = React.useState({ color: "black" })
-  const [error, setError] = React.useState(null)
+function LoginContent({ setMode, dismiss }: LoginContentProps) {
+  const [email, setEmail] = React.useState<string>("")
+  const [password, setPassword] = React.useState<string>("")
+  const [emailStyle, setEmailStyle] = React.useState<CSSProperties>({ color: "black" })
+  const [passwordStyle, setPasswordStyle] = React.useState<CSSProperties>({ color: "black" })
+  const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     updateStyling()
@@ -84,7 +106,7 @@ function LoginContent({ setMode, dismiss }) {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div className="title">
         <h3>LOGIN</h3>
         <p className="error">{error}</p>
@@ -112,20 +134,26 @@ function LoginContent({ setMode, dismiss }) {
           SUBMIT
         </button>
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 
-function CreateContent({ setMode, dismiss }) {
+function CreateContent({ setMode, dismiss }: LoginContentProps) {
   const [error, setError] = React.useState(null)
-  const email = React.useRef(null)
-  const confirmEmail = React.useRef(null)
-  const password = React.useRef(null)
-  const confirmPassword = React.useRef(null)
-  const firstName = React.useRef(null)
-  const lastName = React.useRef(null)
+  const email = React.createRef<HTMLInputElement>()
+  const confirmEmail = React.createRef<HTMLInputElement>()
+  const password = React.createRef<HTMLInputElement>()
+  const confirmPassword = React.createRef<HTMLInputElement>()
+  const firstName = React.createRef<HTMLInputElement>()
+  const lastName = React.createRef<HTMLInputElement>()
 
   const handleCreate = async () => {
+    if (isNull(email.current) || 
+        isNull(password.current) || 
+        isNull(firstName.current) || 
+        isNull(lastName.current) ||
+        isNull(confirmEmail.current) ||
+        isNull(confirmPassword.current) ) { return }
     const eVal = email.current.value
     const pVal = password.current.value
     const firstVal = firstName.current.value
@@ -152,7 +180,7 @@ function CreateContent({ setMode, dismiss }) {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div className="title">
         <h3>CREATE</h3>
         <p className="error">{error}</p>
@@ -195,13 +223,13 @@ function CreateContent({ setMode, dismiss }) {
           CREATE ACCOUNT
         </button>
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 
-export default function Login({ dismiss }) {
+export default function Login({ dismiss } : LoginProps) {
   const [hovering, hoverRef] = useHover()
-  const [mode, setMode] = React.useState("login")
+  const [mode, setMode] = React.useState<string>("login")
 
   const handleBgClick = () => {
     if (hovering === true) {

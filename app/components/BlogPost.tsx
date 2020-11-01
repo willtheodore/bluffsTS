@@ -1,7 +1,17 @@
-import React from "react"
+import * as React from "react"
+import { CSSProperties } from "react"
 import { Link } from "react-router-dom"
 
-export default function BlogPost({ title, date, authorName, content, charLimit = null, postId = null}) {
+interface BlogPostProps {
+  title: string;
+  date: Date;
+  authorName: string;
+  content: string;
+  charLimit?: number | null;
+  postId?: string | null;
+}
+
+export default function BlogPost({ title, date, authorName, content, charLimit = null, postId = null} : BlogPostProps) {
   const styles = {
     container: {
       backgroundColor: "white",
@@ -65,7 +75,7 @@ export default function BlogPost({ title, date, authorName, content, charLimit =
   }
 
   return (
-    <div style={styles.container} className="blog-post-container">
+    <div style={styles.container as CSSProperties} className="blog-post-container">
       {getHeader()}
       <p style={styles.description}>
         {`by ${authorName} // posted ${date}`}
