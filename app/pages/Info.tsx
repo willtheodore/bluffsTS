@@ -1,10 +1,11 @@
-import React from "react"
-import PropTypes from "prop-types"
-import swimImage from "../images/swimImage.jpg"
-import bodyImage from "../images/bodyImage.jpg"
+import * as React from "react"
 
+interface InfoProps {
+  alignment: string;
+  title: string;
+}
 
-export default function Info({ alignment, title }) {
+export default function Info({ alignment, title }: InfoProps) {
   return (
     <div id={`info-wrapper-${alignment}`}>
       <div className="info-header">
@@ -16,7 +17,7 @@ export default function Info({ alignment, title }) {
           </p>
         </div>
         <img
-          src={swimImage}
+          src="../images/swimImage.jpg"
           alt="A pool glistening" />
       </div>
       <div className="body-wrapper">
@@ -31,15 +32,10 @@ export default function Info({ alignment, title }) {
           </div>
         </div>
         <img
-          src={bodyImage}
+          src="../images/bodyImage.jpg"
           alt="Ripped man walks next to pool"
           className="body-image" />
       </div>
     </div>
   )
-}
-
-Info.propTypes = {
-  alignment: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
 }

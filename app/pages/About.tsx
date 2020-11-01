@@ -1,15 +1,14 @@
-import React from "react"
+import * as React from "react"
 
-import Header from "../components/Header.js"
-import aboutImage from "../images/aboutImage.jpg"
+import Header from "../components/Header"
 
-export default function About() {
+export default function About():React.ReactElement {
   return (
     <div id="about-wrapper">
       <Header text="about"/>
       <div className="content-wrapper">
         <div className="float-right">
-          <img src={aboutImage} alt="People enjoying the bluffs"/>
+          <img src="../images/aboutImage.jpg" alt="People enjoying the bluffs"/>
         </div>
         <p className="first-p">Founded in 1962 by 28 families, the Bluffs has been an integral part of the Bedford community ever since. With over 125 active families, we strive to provide the best swim, tennis, and community for you to meet new people, teach your kids to swim, and enjoy the summer months. </p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula ante vel ligula fermentum pretium. Nullam consectetur, leo a maximus imperdiet, urna nisl pulvinar magna, quis bibendum mauris orci at enim. Etiam et nulla massa. Duis pellentesque lectus hendrerit felis tincidunt commodo dapibus in sem. Duis faucibus lectus et orci congue, sed porta purus dapibus. In hendrerit nisl sed eros rutrum condimentum. Etiam non porttitor eros. Nam ligula sem, sodales ut dui eu, pellentesque ullamcorper massa. Nulla facilisi. Ut vel justo nisi. Donec tincidunt vulputate lorem, at elementum tortor feugiat ac. Proin faucibus condimentum tempor.</p>

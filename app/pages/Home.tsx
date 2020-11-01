@@ -1,15 +1,14 @@
-import React from "react"
-import carousel from "../images/carousel1.jpg"
+import * as React from "react"
 
-import HorizonalBreakSm from "../vectors/HorizontalBreakSm.js"
+import HorizonalBreakSm from "../vectors/HorizontalBreakSm"
 
 // Main home page for the site
-export default function Home() {
+export default function Home(){
   return (
     <React.Fragment>
       <div className="carousel">
         <img
-          src={carousel}
+          src="../images/carousel1.jpg"
           alt="Image Carousel" />
       </div>
       <div

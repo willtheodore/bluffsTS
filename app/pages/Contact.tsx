@@ -1,11 +1,11 @@
-import React from "react"
+import * as React from "react"
 
-import Header from "../components/Header.js"
+import Header from "../components/Header"
 
 export default function Contact() {
-  const name = React.useRef("")
-  const email = React.useRef("")
-  const message = React.useRef("")
+  const name = React.createRef<HTMLInputElement>()
+  const email = React.createRef<HTMLInputElement>()
+  const message = React.createRef<HTMLTextAreaElement>()
 
   return (
     <div id="contact-wrapper">
@@ -39,7 +39,6 @@ export default function Contact() {
             MESSAGE
           </label>
           <textarea
-            type="text"
             id="contact-name"
             ref={message} />
         </div>

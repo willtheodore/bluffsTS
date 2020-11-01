@@ -1,22 +1,21 @@
-import React from "react"
-import AuthContext from "../contexts/auth.js"
-import { useLocation } from "react-router-dom"
-import { parsePath } from "../utils/formatters.js"
+import * as React from "react"
+import AuthContext from "../contexts/auth"
+import { parsePath } from "../utils/formatters"
+import { BluffsUser } from "../utils/users"
 
-const RecentPosts = React.lazy(() => import("../components/memberCenter/RecentPosts.js"))
-const Archive = React.lazy(() => import("../components/memberCenter/Archive.js"))
-const Calendar = React.lazy(() => import("../components/memberCenter/Calendar.js"))
-const SignUps = React.lazy(() => import("../components/memberCenter/SignUps.js"))
-const Account = React.lazy(() => import("../components/memberCenter/Account.js"))
-const Admin = React.lazy(() => import("../components/memberCenter/Admin.js"))
-const PostDetail = React.lazy(() => import("../components/memberCenter/PostDetail.js"))
-import Sidebar from "../components/memberCenter/Sidebar.js"
-import Header from "../components/Header.js"
+const RecentPosts = React.lazy(() => import("../components/memberCenter/RecentPosts"))
+const Archive = React.lazy(() => import("../components/memberCenter/Archive"))
+const Calendar = React.lazy(() => import("../components/memberCenter/Calendar"))
+const SignUps = React.lazy(() => import("../components/memberCenter/SignUps"))
+const Account = React.lazy(() => import("../components/memberCenter/Account"))
+const Admin = React.lazy(() => import("../components/memberCenter/Admin"))
+const PostDetail = React.lazy(() => import("../components/memberCenter/PostDetail"))
+import Sidebar from "../components/memberCenter/Sidebar"
+import Header from "../components/Header"
 
 export default function Members() {
-  const user = React.useContext(AuthContext)
-  const [posts, setPosts] = React.useState(null)
-  const location = useLocation()
+  const user: BluffsUser = React.useContext(AuthContext)
+  const location = document.location
   const pathElements = parsePath(location)
 
   if (user === null) {

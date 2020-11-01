@@ -18,8 +18,6 @@ const About = React.lazy(() => import("./pages/About.js"))
 const Contact = React.lazy(() => import("./pages/Contact.js"))
 const Members = React.lazy(() => import("./pages/Members.js"))
 
-
-
 const App: React.FC = () => {
   const [user, setUser] = React.useState<BluffsUser | null>(null)
 
