@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import { parsePath } from "../../utils/formatters.js";
+import { parsePath } from "../../utils/formatters";
 
 interface SidebarItemProps {
 	title: string;

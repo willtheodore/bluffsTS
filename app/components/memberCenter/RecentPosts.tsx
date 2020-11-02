@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { FSPost, getRecentPosts } from "../../utils/blog.js";
-import BlogPost from "../BlogPost.js";
+import { FSPost, getRecentPosts } from "../../utils/blog";
+import { formatPosts } from "../../utils/formatters";
+import BlogPost from "../BlogPost";
 
 export default function RecentPosts() {
 	const [posts, setPosts] = useState<FSPost[] | null>(null);
@@ -15,7 +16,10 @@ export default function RecentPosts() {
 	const getPosts = async () => {
 		try {
 			const recentResults = await getRecentPosts(3);
-			setPosts(recentResults.data ? recentResults.data : []);
+			if (recentResults.data) {
+				const formattedResults = formatPosts(recentResults.data);
+				setPosts(formattedResults);
+			}
 		} catch (e) {
 			setError(e.message);
 		}
