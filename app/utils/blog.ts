@@ -20,7 +20,7 @@ export interface FSPost {
   year: number;
   formattedDate?: string;
   postId?: string;
-  comments?: { [key: string]: FSComment }
+  comments?: FSCommentCollection
 }
 
 export type FSCommentCollection = { [key: string]: FSComment }
