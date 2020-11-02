@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 interface BlogPostProps {
   title: string;
-  date: Date;
+  date: string;
   authorName: string;
   content: string;
   charLimit?: number | null;

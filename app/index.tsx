@@ -7,7 +7,7 @@ import firebase from "./firebase.js"
 import { getAdmins } from "./utils/users"
 
 import { User } from "../node_modules/firebase/index"
-import { AdminsObject, BluffsUser } from "./utils/users"
+import { FSAdminsCollection, BluffsUser } from "./utils/users"
 
 import Nav from "./components/Nav.js"
 import Footer from "./components/Footer.js"
@@ -43,7 +43,7 @@ const App: React.FC = () => {
     }
   }
 
-  const determineIfAdmin = (uid: string, admins: AdminsObject | undefined): boolean => {
+  const determineIfAdmin = (uid: string, admins: FSAdminsCollection | undefined): boolean => {
     if (admins) {
       for (const id in admins) {
         if (id === uid) { return true }

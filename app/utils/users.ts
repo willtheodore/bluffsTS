@@ -6,20 +6,19 @@ export interface ReturnObject<DataType> {
   message: string;
 }
 
-
 // Represents a User in the firestore database. Also includes the optional uid property (added during api requests)
 export interface DatabaseUser {
   uid?: string;
-  email?: string;
-  displayName?: string;
+  email: string;
+  displayName: string;
   posts?: string[];
 }
 
 // Represents a user object from firebase authenticaion with the addition of the isAdmin property. 
-export type BluffsUser = IsAdmin & firebase.User;
 type IsAdmin = { isAdmin?: boolean }
+export type BluffsUser = IsAdmin & firebase.User;
 
-export interface AdminsObject {
+export interface FSAdminsCollection {
   [key: string]: true;
 }
 
@@ -184,14 +183,14 @@ export const removeUserFromAdmins = async (id: string): APIReturn<DocumentRefere
 /**
  * Gets the admins document from the firestore database.
  * 
- * @returns {APIReturn<AdminsObject>} a Promise containing the admins document from the firestore database and a success message
+ * @returns {APIReturn<FSAdminsCollection>} a Promise containing the admins document from the firestore database and a success message
  */
-export const getAdmins = async (): APIReturn<AdminsObject> => {
+export const getAdmins = async (): APIReturn<FSAdminsCollection> => {
   try {
     const admins: DocumentSnapshot = await firestore.collection("users").doc("admins").get()
     return {
       message: "success",
-      data: admins.data() as AdminsObject
+      data: admins.data() as FSAdminsCollection
     }
   } catch (e) {
     console.log("Error from 'getAdmins' in 'users.ts'", e)

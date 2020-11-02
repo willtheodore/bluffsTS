@@ -3,11 +3,11 @@ import { CSSProperties, createRef, useState, useContext } from "react"
 import { FaTrash } from "react-icons/fa"
 import { isNull } from "lodash"
 
-import { formatComment } from "../utils/formatters.js"
-import { postComment, deleteCommentById, FSCommentCollection, FSComment } from "../utils/blog.js"
-import AuthContext from "../contexts/auth.js"
-import { BluffsUser } from "../utils/users.js"
-import { SetState } from "./Selector.js"
+import { formatComment } from "../utils/formatters"
+import { postComment, deleteCommentById, FSCommentCollection, FSComment } from "../utils/blog"
+import AuthContext from "../contexts/auth"
+import { BluffsUser } from "../utils/users"
+import { SetState } from "./Selector"
 
 interface CommentsProps {
   comments: FSCommentCollection;

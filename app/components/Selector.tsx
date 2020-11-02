@@ -1,19 +1,19 @@
 import * as React from "react"
-import { ReactElement, Fragment, useState, useEffect } from "react"
+import { ReactElement, Fragment, useState, useEffect, CSSProperties } from "react"
 
 import { Link } from "react-router-dom"
 import { parsePath } from "../utils/formatters.js"
 
 export type SetState<T> = React.Dispatch<React.SetStateAction<T>>
 interface SelectorProps {
-  color: string;
-  selectedColor: string;
-  title: string | null;
-  fontSize: string | null;
-  preSelected: string | null;
-  icons: JSX.Element[] | null;
-  setState: SetState<string> | null;
-  linkDestinations: string[] | null;
+  color?: string;
+  selectedColor?: string;
+  title?: string | null;
+  fontSize?: string | null;
+  preSelected?: string | null;
+  icons?: JSX.Element[] | null;
+  setState?: SetState<any> | null;
+  linkDestinations?: string[] | null;
   items: string[];
 }
 
@@ -110,14 +110,14 @@ export default function Selector({ color = "#FFFFF3",
   )
 
   return (
-    <div style={styles.container} className="selector">
+    <div style={styles.container as CSSProperties} className="selector">
       {title &&  (
         <Fragment>
           <h4 style={styles.title}>{title}</h4>
           <hr style={styles.break}/>
         </Fragment>
       )}
-      <ul style={styles.list}>
+      <ul style={styles.list as CSSProperties}>
         {items.map((item, index) => {
           let itemStyle = styles.item
           if (item === selected) {
@@ -135,7 +135,7 @@ export default function Selector({ color = "#FFFFF3",
             destination = destination.concat(linkDestinations[index] + "/")
 
             return (
-              <li className="pointer" key={index} style={itemStyle} onClick={() => setSelected(item)}>
+              <li className="pointer" key={index} style={itemStyle as CSSProperties} onClick={() => setSelected(item)}>
                 <Link to={destination}>
                 {getInnerContent(index, item)}
                 </Link>
@@ -144,7 +144,7 @@ export default function Selector({ color = "#FFFFF3",
           }
 
           return (
-            <li className="pointer" key={index} style={itemStyle} onClick={() => setSelected(item)}>
+            <li className="pointer" key={index} style={itemStyle as CSSProperties} onClick={() => setSelected(item)}>
               {getInnerContent(index, item)}
             </li>
         )})}

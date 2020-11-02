@@ -6,6 +6,10 @@ export interface Search {
 
 export type Path = string[]
 
+export function isOfType<T>(varToBeChecked: any, propertyToCheckFor: keyof T): varToBeChecked is T {
+  return (varToBeChecked as T)[propertyToCheckFor] !== undefined
+}
+
 /**
  * Formats a date for use in UI components
  * 

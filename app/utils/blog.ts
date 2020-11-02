@@ -145,7 +145,7 @@ export const setPostListenerByIds = (ids: string[], handlePosts: PostsHandler): 
  * @param quantity {number} the number of recent post to retrieve
  * @returns {APIReturn<FSPost[]>} a Promise containing an array of the {quantity} most recent posts and a success message
  */
-const getRecentPosts = async (quantity: number): APIReturn<FSPost[]> => {
+export const getRecentPosts = async (quantity: number): APIReturn<FSPost[]> => {
   try {
     let result: FSPost[] = []
     const posts = await firestore.collection("posts").orderBy("datePost", "desc").limit(quantity).get()
@@ -273,7 +273,7 @@ export const deleteCommentById = async (postId: string, commentId: string): APIR
   }
 }
 
-export const getPostsByDate = async (month: string, year: number) => {
+export const getPostsByDate = async (month: string, year: number): APIReturn<DocumentReference> => {
   try {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     const monthNum = months.indexOf(month)
@@ -288,7 +288,10 @@ export const getPostsByDate = async (month: string, year: number) => {
     })
     result = _.sortBy(result, ["datePosted"])
     _.reverse(result)
-    return result
+    return {
+      message: "success",
+      data: result
+    }
   } catch (e) {
     console.log("Error from 'getPostsByDate' in 'blog.ts'", e)
     throw e
