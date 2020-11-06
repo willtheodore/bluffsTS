@@ -1,0 +1,124 @@
+@import "./fonts.scss";
+@import "./colors.scss";
+
+@mixin labelStyle {
+	font-family: "heebo-medium";
+	font-size: 24px;
+	font-weight: normal;
+	text-align: right;
+	align-self: center;
+}
+
+.date-picker {
+	display: grid;
+	grid-template-columns: max(18%, 150px) 1fr;
+}
+
+.date-picker-label {
+	grid-column: 1/2;
+	width: 100%;
+	@include labelStyle();
+	margin-right: 10px;
+}
+
+.date-picker-wrapper {
+	margin: 5px 0 5px 10px;
+	columns: 2/3;
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	border-radius: 5px;
+	border: 2px solid $lightBlue;
+
+	hr {
+		width: 100%;
+		border-color: $lightBlue;
+		margin: 3px 0 5px;
+	}
+}
+
+.date-picker-selector {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	h6 {
+		margin: 0;
+		font-family: "heebo-regular";
+		font-size: 14px;
+		font-weight: normal;
+		flex-basis: 60%;
+		text-align: center;
+		align-self: center;
+	}
+	svg {
+		flex-basis: 20%;
+		margin: 0 auto;
+	}
+	svg:hover {
+		cursor: pointer;
+	}
+}
+
+.date-picker-calendar {
+	display: grid;
+	grid-template-columns: repeat(7, calc(100% / 7));
+
+	.date-picker-square {
+		background-color: $mutedRed;
+		border-radius: 3px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 2px;
+
+		p {
+			margin: 0;
+		}
+	}
+}
+
+.time-selector-wrapper {
+	display: grid;
+	grid-template-columns: max(18%, 150px) 1fr;
+}
+
+.time-selector-label {
+	@include labelStyle();
+	grid-column: 1/2;
+}
+
+.time-selector {
+	grid-column: 2/3;
+	display: flex;
+	align-items: center;
+	justify-self: baseline;
+	align-self: center;
+	border: 2px solid $lightBlue;
+	border-radius: 5px;
+	padding: 0 5px;
+	margin: 5px 0 5px 10px;
+	.divider {
+		position: relative;
+		margin: 0 5px;
+	}
+	.extra-zero {
+		margin: 0;
+		color: black;
+		z-index: 4;
+		position: relative;
+		left: 10px;
+	}
+	input {
+		width: 3ch;
+		border: none;
+		font-family: "heebo-regular";
+		font-size: 18px;
+		background-color: $mutedRed;
+		text-align: right;
+	}
+	.minute {
+		position: relative;
+		right: 1ch;
+	}
+}

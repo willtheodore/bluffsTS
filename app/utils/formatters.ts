@@ -194,21 +194,31 @@ export function formatTime(startTime: string, endTime: string): string {
 
 	let startFormat;
 	let endFormat;
+	let startAPM;
+	let endAPM;
 	if (Number(startHour) > 12) {
-		startFormat = `${Number(startHour) - 12}:${startTime.slice(3)} PM`;
+		startFormat = `${Number(startHour) - 12}:${startTime.slice(3)}`;
+		startAPM = "PM";
 	} else if (Number(startHour) === 12) {
-		startFormat = `${startTime} PM`;
+		startFormat = `${startTime}`;
+		startAPM = "PM";
 	} else {
-		startFormat = `${startTime} AM`;
+		startFormat = `${startTime}`;
+		startAPM = "AM";
 	}
 
 	if (Number(endHour) > 12) {
-		endFormat = `${Number(endHour) - 12}:${endTime.slice(3)} PM`;
+		endFormat = `${Number(endHour) - 12}:${endTime.slice(3)}`;
+		endAPM = "PM";
 	} else if (Number(endHour) === 12) {
-		endFormat = `${endTime} PM`;
+		endFormat = `${endTime}`;
+		endAPM = "PM";
 	} else {
-		endFormat = `${endTime} AM`;
+		endFormat = `${endTime}`;
+		endAPM = "AM";
 	}
 
-	return `${startFormat} - ${endFormat}`;
+	return startAPM === endAPM
+		? `${startFormat} - ${endFormat} ${startAPM}`
+		: `${startFormat} ${startAPM} - ${endFormat} ${endAPM}`;
 }

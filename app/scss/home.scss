@@ -2,30 +2,31 @@
 @import "./colors.scss";
 
 .carousel {
-  min-width: 100%;
-  max-height: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
+	min-width: 100%;
+	max-height: 600px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	overflow: hidden;
 
-  img {
-    width: 100%;
-    object-fit: cover;
-  }
+	img {
+		width: 100%;
+		object-fit: cover;
+	}
 }
 
 #home-wrapper {
-  margin: 0 auto;
-  position: relative;
-  top: -20px;
-  width: 75vw;
-  height: auto;
+	margin: 0 auto;
+	position: relative;
+	top: -20px;
+	width: 75vw;
+	height: auto;
+	grid-row: 2/3;
 
-  h2 {
-    font-family: "heebo-medium";
-    font-size: 32px;
-    color: $darkBlue;
-  }
+	h2 {
+		font-family: "heebo-medium";
+		font-size: 32px;
+		color: $darkBlue;
+	}
 }

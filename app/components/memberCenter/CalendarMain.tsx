@@ -1,11 +1,7 @@
 import * as React from "react";
 import { CSSProperties, Fragment, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-	FSEvent,
-	getEventsByDate,
-	getEventsByMonth,
-} from "../../utils/calendar";
+import { FSEvent, getEventsByMonth } from "../../utils/calendar";
 
 import Selector from "../Selector";
 import { getMonth, getYears } from "./Archive";
@@ -199,7 +195,7 @@ function CalendarView({ monthNum, yearNum }: CalendarViewProps) {
 			</div>
 
 			<div className="calendar-grid">
-				{generateCalendarGrid().map((gridItem, index) => {
+				{generateCalendarGrid().map((gridItem) => {
 					const initialWeekday = formatDay(day1.current.getDay());
 					const currentWeekday = ((initialWeekday + gridItem.day - 1) % 7) + 1;
 					const currentRow = calculateRow(initialWeekday, gridItem.day);

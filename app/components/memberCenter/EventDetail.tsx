@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { FSEvent, getEventsByDate } from "../../utils/calendar";
+import { FSEvent, getEventById } from "../../utils/calendar";
 import { formatTime, parsePath, parseSearch } from "../../utils/formatters";
 
 export default function EventDetail() {
@@ -14,29 +14,18 @@ export default function EventDetail() {
 	}, [path, search]);
 
 	const updateEvent = async () => {
-		try {
-			if ((path[2] = "eventDetail")) {
-				if (search.eventId) {
-					const jsDate = new Date(Number(search.eventId));
-					const day = jsDate.getDate();
-					const month = jsDate.getMonth();
-					const year = jsDate.getFullYear();
-
-					const events = await getEventsByDate(day, month, year);
-					if (!events.data) {
-						throw Error("There are no events we could find.");
-					}
-					for (const item of events.data) {
-						if (item.eventId === search.eventId) {
-							setEvent(item);
-						} else {
-							console.log("Unable to find an event matching that id.");
-						}
-					}
+		if ((path[2] = "eventDetail")) {
+			if (search.eventId) {
+				const apiResponse = await getEventById(search.eventId);
+				console.log(apiResponse.message);
+				//TODO: remove console log above
+				const eventData = apiResponse.data;
+				if (eventData) {
+					setEvent(eventData);
+				} else {
+					setError(apiResponse.message);
 				}
 			}
-		} catch (e) {
-			setError(e.message);
 		}
 	};
 

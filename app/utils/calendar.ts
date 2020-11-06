@@ -101,3 +101,18 @@ export const getEventsByMonth = async (
 		};
 	}
 };
+
+export const getEventById = async (id: string): APIReturn<FSEvent> => {
+	try {
+		const eventSnapshot = await firestore.collection("events").doc(id).get();
+		const event = eventSnapshot.data();
+		return {
+			message: "Success. Returning the event",
+			data: event,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};

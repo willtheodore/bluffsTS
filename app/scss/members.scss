@@ -1,5 +1,6 @@
 @import "./mixins.scss";
 @import "./colors.scss";
+@import "./datePicker.scss";
 
 #members-wrapper {
 	margin-top: 100px;
@@ -25,6 +26,7 @@
 	margin-left: 20px;
 	display: flex;
 	flex-direction: column;
+	grid-row: 2/3;
 
 	h1 {
 		@include header-large;
@@ -294,6 +296,38 @@
 			}
 			//----------------------------------
 			#calendar-events {
+				margin: 0 20px;
+
+				.content-wrapper {
+					margin-bottom: 30px;
+				}
+
+				.event-input {
+					display: grid;
+					grid-template-columns: max(18%, 150px) 1fr;
+
+					label {
+						text-align: right;
+						width: 100%;
+						font-family: "heebo-medium";
+						font-size: 24px;
+					}
+
+					input,
+					textarea {
+						margin-left: 10px;
+						padding: 10px;
+						border: none;
+						background-color: $mutedRed;
+						font-size: 16px;
+						font-family: "heebo-regular";
+					}
+
+					textarea {
+						resize: vertical;
+						height: 400px;
+					}
+				}
 			}
 			//----------------------------------
 			#manage-admins {
