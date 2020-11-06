@@ -35,6 +35,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
+		margin-bottom: 20px;
 	}
 
 	.sidebar {
@@ -75,7 +76,6 @@
 	//----------------------------------
 	#center-flow {
 		display: flex;
-		flex-direction: row;
 
 		#recent-posts {
 			height: 100%;
@@ -95,6 +95,94 @@
 		#calendar {
 			height: 100%;
 			width: 100%;
+
+			.selectors {
+				.selector {
+					margin: 0 20px 10px;
+				}
+			}
+
+			.header {
+				font-size: 58px;
+				color: white;
+				font-family: "heebo-bold";
+				margin-left: 20px;
+			}
+
+			.calendar-view {
+				margin: 0 20px 150px;
+			}
+
+			.calendar-header {
+				padding: 10px 0;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+
+				.weekday-wrapper {
+					flex-grow: 1;
+					flex-basis: 100%;
+				}
+
+				p {
+					margin: 0;
+					text-align: center;
+					font-family: "heebo-regular";
+					font-size: 18px;
+					margin: 0;
+				}
+			}
+
+			.calendar-grid {
+				width: 100%;
+				height: 100%;
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				grid-template-rows: repeat(6, clamp(100px, 20vh, 200px));
+			}
+
+			.square-wrapper {
+				margin: 10px;
+			}
+
+			.grid-item-content {
+				height: 100%;
+				width: 100%;
+				background-color: white;
+				color: $darkBlue;
+				border-radius: 5px;
+				overflow: hidden;
+
+				.day-label {
+					margin: 5px 0 0 5px;
+				}
+			}
+
+			.event {
+				background-color: $lightBlue;
+				color: white;
+				padding: 5px;
+				margin: 0 0 5px;
+			}
+			.see-more {
+				background-color: $brightRed;
+			}
+
+			.event-title {
+				font-family: "heebo-regular";
+				font-size: 12px;
+				margin: 0;
+				white-space: nowrap;
+			}
+
+			.event-detail {
+				margin: 0 20px 150px;
+
+				.time {
+					font-size: 36px;
+					font-family: "heebo-medium";
+				}
+			}
 		}
 
 		#sign-ups {
@@ -111,7 +199,7 @@
 			height: 100%;
 			width: 100%;
 
-			.selector {
+			.admin-selector {
 				margin: 0 20px 10px;
 				width: 60%;
 			}

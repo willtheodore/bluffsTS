@@ -10,19 +10,19 @@
 #app,
 body,
 html {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  background-color: $darkBlue;
-  cursor: default;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	background-color: $darkBlue;
+	cursor: default;
 }
 
 textarea:focus {
-  outline: none;
+	outline: none;
 }
 
 ::-webkit-scrollbar {
-  width: 0;
+	width: 0;
 }
 
 h1,
@@ -31,156 +31,161 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0;
+	margin: 0;
 }
 
 p {
-  font-family: "heebo-regular";
-  font-size: 18px;
+	font-family: "heebo-regular";
+	font-size: 18px;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .pointer:hover {
-  cursor: pointer;
+	cursor: pointer;
+}
+
+.loading {
+	font-size: 36px;
+	font-family: "heebo-bold";
 }
 
 .float-right {
-  float: right;
+	float: right;
 }
 
 .container {
-  background-color: $darkBlue;
-  margin: 0 auto;
+	background-color: $darkBlue;
+	margin: 0 auto;
 }
 
 .content-wrapper {
-  background: white;
-  border-radius: 7px;
-  color: black;
-  padding: 10px 30px;
+	background: white;
+	border-radius: 7px;
+	color: black;
+	padding: 10px 30px;
 
-  p {
-    @include body;
-    margin: 15px 0 0;
-  }
+	p {
+		@include body;
+		margin: 15px 0 0;
+	}
 }
 
 .btn {
-  border-radius: 4px;
-  font-size: 18px;
-  border: none;
-  padding: 5px 15px;
+	border-radius: 4px;
+	font-size: 18px;
+	border: none;
+	padding: 5px 15px;
 }
 
 .btn:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .clear {
-  background: none;
-  color: inherit;
-  padding: 0;
+	background: none;
+	color: inherit;
+	padding: 0;
 }
 
 nav {
-  background: $navBlue;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  color: white;
-  overflow: hidden;
-  z-index: 99;
+	background: $navBlue;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	color: white;
+	overflow: hidden;
+	z-index: 99;
 
-  .logotype {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
+	.logotype {
+		display: flex;
+		align-items: center;
+		padding: 15px 20px;
 
-    a {
-      font-family: "heebo-bold";
-      font-size: 48px;
-      display: inline;
-      text-decoration-color: $brightRed;
-    }
+		a {
+			font-family: "heebo-bold";
+			font-size: 48px;
+			display: inline;
+			text-decoration-color: $brightRed;
+		}
 
-    svg {
-      margin-left: 10px;
-      display: inline;
-    }
-  }
+		svg {
+			margin-left: 10px;
+			display: inline;
+		}
+	}
 
-  p {
-    display: inline;
-    margin-right: 18px;
-  }
+	p {
+		display: inline;
+		margin-right: 18px;
+	}
 
-  ul {
-    @include body;
-    padding-right: 20px;
+	ul {
+		@include body;
+		padding-right: 20px;
 
-    button {
-      background-color: white;
-      color: black;
-      font-family: "heebo-medium";
-    }
-  }
+		button {
+			background-color: white;
+			color: black;
+			font-family: "heebo-medium";
+		}
+	}
 }
 
 #fourohfour {
-  margin: 120px 0 50vh 20px;
-  color: white;
-  height: 100%;
+	margin: 120px 0 50vh 20px;
+	color: white;
+	height: 100%;
 
-  h1 {
-    @include header-large;
-    font-size: 8vw;
-  }
+	h1 {
+		@include header-large;
+		font-size: 8vw;
+	}
 }
 
 #footer {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  background-color: $lightBlue;
-  color: white;
-  align-items: center;
-  justify-content: center;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	background-color: $lightBlue;
+	color: white;
+	align-items: center;
+	justify-content: center;
 
-  ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+	ul {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 
-    a {
-      margin: 10px 20px 0;
-      @include body;
-    }
+		a {
+			margin: 10px 20px 0;
+			@include body;
+		}
 
-    button {
-      margin: 10px 20px 0;
-    }
-  }
+		button {
+			margin: 10px 20px 0;
+		}
+	}
 
-  p {
-    @include body;
-    margin: 10px 0;
-    opacity: 60%;
-  }
+	p {
+		@include body;
+		margin: 10px 0;
+		opacity: 60%;
+	}
 }

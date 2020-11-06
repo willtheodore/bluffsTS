@@ -30,6 +30,7 @@ export default function Admin() {
 	return (
 		<div id="admin">
 			<Selector
+				className="admin-selector"
 				icons={[<FaPencilAlt />, <FaEdit />, <FaCalendar />, <FaLock />]}
 				items={[
 					"Create Post",

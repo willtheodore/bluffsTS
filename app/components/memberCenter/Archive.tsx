@@ -85,7 +85,7 @@ export default function Archive() {
 	);
 }
 
-function getYears() {
+export function getYears() {
 	const current = new Date(Date.now());
 	const year = current.getFullYear();
 	let years = new Array();
@@ -97,7 +97,7 @@ function getYears() {
 	return years;
 }
 
-function getMonth() {
+export function getMonth() {
 	const current = new Date(Date.now());
 	const month = current.getMonth();
 	const months = [

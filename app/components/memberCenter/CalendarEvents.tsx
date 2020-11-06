@@ -1,9 +1,9 @@
-import * as React from "react"
+import * as React from "react";
 
-export default function CalendarEvents() {
-  return (
-    <div id="calendar-events">
-      Calendar Events
-    </div>
-  )
+export default function Calendar() {
+	return (
+		<div id="calendar-events">
+			<h1>Calendar</h1>
+		</div>
+	);
 }

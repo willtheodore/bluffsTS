@@ -12,6 +12,7 @@ import { parsePath } from "../utils/formatters";
 
 export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 interface SelectorProps {
+	className?: string;
 	color?: string;
 	selectedColor?: string;
 	title?: string | null;
@@ -24,6 +25,7 @@ interface SelectorProps {
 }
 
 export default function Selector({
+	className = "",
 	color = "#FFFFF3",
 	selectedColor = "#FFCED4",
 	title = null,
@@ -120,7 +122,10 @@ export default function Selector({
 	);
 
 	return (
-		<div style={styles.container as CSSProperties} className="selector">
+		<div
+			style={styles.container as CSSProperties}
+			className={`selector ${className}`}
+		>
 			{title && (
 				<Fragment>
 					<h4 style={styles.title}>{title}</h4>
