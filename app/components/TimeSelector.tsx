@@ -38,7 +38,7 @@ export default function TimeSelector({ label, onChange }: TimeSelectorProps) {
 			return ``;
 		}
 		const number = Number(value);
-		if (isNaN(number) || !number || number > 12 || number < 1) {
+		if (isNaN(number) || !number || number > 24 || number < 1) {
 			return `error`;
 		}
 		setHour(number);
