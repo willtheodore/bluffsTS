@@ -69,13 +69,6 @@ export default function Sidebar({ isAdmin }: SidebarProps) {
 					<FaCalendarAlt />
 				</SidebarItem>
 				<SidebarItem
-					title="Sign-ups"
-					isActive={path[1] === "signups"}
-					to="/members/signups"
-				>
-					<FaPenSquare />
-				</SidebarItem>
-				<SidebarItem
 					title="Account"
 					isActive={path[1] === "account"}
 					to="/members/account"

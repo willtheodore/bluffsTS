@@ -75,7 +75,7 @@ export default function EventDetail() {
 									className="btn btn-bold-red"
 									onClick={() => handleDelete()}
 								>
-									CONFI. M
+									CONFIRM
 								</button>
 							</Fragment>
 						))}

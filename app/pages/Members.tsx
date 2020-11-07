@@ -63,7 +63,6 @@ export default function Members() {
 					)}
 					{pathElements[1] === "archive" && <Archive />}
 					{pathElements[1] === "calendar" && <Calendar />}
-					{pathElements[1] === "signups" && <SignUps />}
 					{pathElements[1] === "account" && <Account />}
 					{pathElements[1] === "admin" && <Admin />}
 					{pathElements[1] === "postDetail" && <PostDetail />}
