@@ -1,5 +1,11 @@
 import firebase, { firestore } from "../firebase";
-import { DocumentReference, DocumentSnapshot, ReturnObject } from "./users";
+import {
+	CollectionReference,
+	DocumentReference,
+	DocumentSnapshot,
+	QuerySnapshot,
+	ReturnObject,
+} from "./users";
 
 export interface FSEvent {
 	categories?: FSEventCategory;
@@ -155,6 +161,39 @@ export const setEventListenerById = async (
 		return {
 			message: "Success! Listener set.",
 			data: docRef,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};
+
+type UpdateEvents = (events: FSEvent[]) => void;
+export const setEventListenersByDate = async (
+	day: number,
+	month: number,
+	year: number,
+	onChange: UpdateEvents
+): APIReturn<CollectionReference> => {
+	try {
+		await firestore
+			.collection("events")
+			.where("day", "==", day)
+			.where("month", "==", month)
+			.where("year", "==", year)
+			.onSnapshot((eventsSnapshot: QuerySnapshot) => {
+				let result: FSEvent[] = [];
+				eventsSnapshot.forEach((event: DocumentSnapshot) => {
+					result.push({
+						eventId: event.id,
+						...event.data(),
+					});
+				});
+				onChange(result);
+			});
+		return {
+			message: "Success. Listener set for all events on this date.",
 		};
 	} catch (e) {
 		return {

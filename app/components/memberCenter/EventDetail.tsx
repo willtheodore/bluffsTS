@@ -7,10 +7,19 @@ import {
 	FSEvent,
 	setEventListenerById,
 } from "../../utils/calendar";
-import { formatTime, parsePath, parseSearch } from "../../utils/formatters";
+import {
+	formatLinks,
+	formatTime,
+	parsePath,
+	parseSearch,
+} from "../../utils/formatters";
 import { BluffsUser } from "../../utils/users";
 
-export default function EventDetail() {
+interface EventDetailProps {
+	passedEvent?: FSEvent | null;
+}
+
+export default function EventDetail({ passedEvent = null }: EventDetailProps) {
 	const [event, setEvent] = useState<FSEvent | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
@@ -19,7 +28,11 @@ export default function EventDetail() {
 	const user: BluffsUser = useContext(AuthContext);
 
 	useEffect(() => {
-		updateEvent();
+		if (!passedEvent) {
+			updateEvent();
+		} else {
+			setEvent(passedEvent);
+		}
 	}, []);
 
 	const updateEvent = async () => {
@@ -60,6 +73,7 @@ export default function EventDetail() {
 					{event.author === user.uid &&
 						(!confirmDelete ? (
 							<FaTrash
+								size={36}
 								onClick={() => handleDelete(event.eventId)}
 								color="#EF233C"
 							/>
@@ -85,7 +99,10 @@ export default function EventDetail() {
 						event.startTime,
 						event.endTime
 					)}`}</p>
-					<p>{event.description}</p>
+					<p
+						className="format-links"
+						dangerouslySetInnerHTML={{ __html: formatLinks(event.description) }}
+					></p>
 				</div>
 			</div>
 		);

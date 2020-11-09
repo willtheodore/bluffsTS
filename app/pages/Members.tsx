@@ -10,7 +10,6 @@ const Archive = React.lazy(() => import("../components/memberCenter/Archive"));
 const Calendar = React.lazy(
 	() => import("../components/memberCenter/Calendar")
 );
-const SignUps = React.lazy(() => import("../components/memberCenter/SignUps"));
 const Account = React.lazy(() => import("../components/memberCenter/Account"));
 const Admin = React.lazy(() => import("../components/memberCenter/Admin"));
 const PostDetail = React.lazy(

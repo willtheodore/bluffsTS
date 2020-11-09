@@ -151,7 +151,7 @@ export default function Selector({
 
 						return (
 							<li
-								className="pointer"
+								className="pointer selector-item"
 								key={index}
 								style={itemStyle as CSSProperties}
 								onClick={() => setSelected(item)}
@@ -163,7 +163,7 @@ export default function Selector({
 
 					return (
 						<li
-							className="pointer"
+							className="pointer selector-item"
 							key={index}
 							style={itemStyle as CSSProperties}
 							onClick={() => setSelected(item)}

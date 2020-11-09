@@ -21,6 +21,28 @@ textarea:focus {
 	outline: none;
 }
 
+.red-hover {
+	transition: text-decoration-color 500ms;
+}
+
+.red-hover:hover {
+	text-decoration-color: $brightRed;
+	text-decoration: underline;
+}
+
+.error {
+	color: $brightRed;
+	font-size: 18px;
+	font-family: "heebo-medium";
+}
+
+.format-links {
+	a {
+		color: $lightBlue;
+		font-family: "heebo-bold";
+	}
+}
+
 ::-webkit-scrollbar {
 	width: 0;
 }
@@ -144,8 +166,16 @@ nav {
 	}
 
 	p {
+		margin-right: 2px;
 		display: inline;
-		margin-right: 18px;
+		border-radius: 5px;
+		padding: 5px 10px;
+		border: 2px solid rgba($color: #000000, $alpha: 0);
+		transition: border-color 200ms;
+	}
+
+	p:hover {
+		border: 2px solid $lightBlue;
 	}
 
 	ul {
@@ -156,8 +186,21 @@ nav {
 			background-color: white;
 			color: black;
 			font-family: "heebo-medium";
+			transition: color 500ms;
+		}
+
+		button:hover {
+			color: red;
 		}
 	}
+}
+
+.selector-item {
+	transition: background-color 500ms;
+}
+
+.selector-item:hover {
+	background-color: $mutedRed;
 }
 
 #fourohfour {

@@ -11,7 +11,8 @@ import Login from "./Login";
 
 const activeStyle = {
 	textDecoration: "underline",
-	textDecorationColor: "#EF233C",
+	textDecorationThickness: "3px",
+	textDecorationColor: "#3892CC",
 };
 
 export default function Nav() {

@@ -4,7 +4,6 @@ import {
 	FaNewspaper,
 	FaBox,
 	FaCalendarAlt,
-	FaPenSquare,
 	FaUserAlt,
 	FaUserTie,
 } from "react-icons/fa";
@@ -27,7 +26,7 @@ function SidebarItem({ title, isActive, children, to }: SidebarItemProps) {
 		};
 	}
 	return (
-		<div className="sidebar-item" style={style}>
+		<div className="sidebar-item selector-item" style={style}>
 			{children}
 			<Link to={to}>
 				<p>{title}</p>

@@ -114,8 +114,6 @@ function CalendarView({ monthNum, yearNum }: CalendarViewProps) {
 		let result: EventStore = {};
 
 		const apiResponse = await getEventsByMonth(monthNum, yearNum);
-		console.log(apiResponse.message);
-		// TODO: remove above console log
 		const eventsInMonth = apiResponse.data;
 		if (!eventsInMonth) {
 			setLoading(false);
@@ -208,9 +206,18 @@ function CalendarView({ monthNum, yearNum }: CalendarViewProps) {
 					return (
 						<div className="square-wrapper" key={gridItem.day} style={style}>
 							{gridItem.events ? (
-								<CalendarSquare day={gridItem.day} events={gridItem.events} />
+								<CalendarSquare
+									day={gridItem.day}
+									events={gridItem.events}
+									month={monthNum}
+									year={yearNum}
+								/>
 							) : (
-								<CalendarSquare day={gridItem.day} />
+								<CalendarSquare
+									day={gridItem.day}
+									month={monthNum}
+									year={yearNum}
+								/>
 							)}
 						</div>
 					);
@@ -222,10 +229,12 @@ function CalendarView({ monthNum, yearNum }: CalendarViewProps) {
 
 interface CalendarSquareProps {
 	day: number;
+	month: number;
+	year: number;
 	events?: FSEvent[];
 }
 
-function CalendarSquare({ day, events }: CalendarSquareProps) {
+function CalendarSquare({ day, events, month, year }: CalendarSquareProps) {
 	return (
 		<div className="grid-item-content">
 			<p className="day-label">{day}</p>
@@ -247,7 +256,9 @@ function CalendarSquare({ day, events }: CalendarSquareProps) {
 						);
 					}
 				})}
-			{events && events.length > 2 && <CalendarEvent seeMore />}
+			{events && events.length > 2 && (
+				<CalendarEvent seeMore dateString={`d=${day}&m=${month}&y=${year}`} />
+			)}
 		</div>
 	);
 }
@@ -255,13 +266,18 @@ function CalendarSquare({ day, events }: CalendarSquareProps) {
 interface CalendarEventProps {
 	event?: FSEvent | null;
 	seeMore?: boolean;
+	dateString?: string | null;
 }
 
-function CalendarEvent({ event, seeMore = false }: CalendarEventProps) {
+function CalendarEvent({
+	event,
+	seeMore = false,
+	dateString = null,
+}: CalendarEventProps) {
 	if (seeMore) {
 		return (
 			<Link
-				to={`/members/calendar/eventSummary?month=${event}&day=${event}&year=${event}`}
+				to={`/members/calendar/eventSummary?${dateString}`}
 				key={new Date(Date.now()).getTime()}
 			>
 				<div className="event see-more">

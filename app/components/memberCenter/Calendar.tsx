@@ -3,6 +3,7 @@ import { parsePath } from "../../utils/formatters";
 
 import CalendarMain from "./CalendarMain";
 import EventDetail from "./EventDetail";
+import EventSummary from "./EventSummary";
 
 export default function Calendar() {
 	const path = parsePath(document.location);
@@ -26,6 +27,7 @@ export default function Calendar() {
 			<div id="calendar">
 				{path[2] === undefined && <CalendarMain />}
 				{path[2] === "eventDetail" && <EventDetail />}
+				{path[2] === "eventSummary" && <EventSummary />}
 			</div>
 		</React.Suspense>
 	);

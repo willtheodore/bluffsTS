@@ -60,6 +60,7 @@ export default function ManagePosts() {
 				await deletePostById(postId);
 				setDeletePost(`success: ${postId}`);
 				await removePostFromUserObject(user.uid, postId);
+				setDeletePost(null);
 			} else if (id) {
 				setDeletePost(id);
 			} else {
