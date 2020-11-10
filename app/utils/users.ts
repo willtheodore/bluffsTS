@@ -1,4 +1,6 @@
 import firebase, { firestore } from "../firebase";
+import { validateEmail, validatePassword } from "./authentication";
+import { getPostsByUserId } from "./blog";
 
 // Represents the object returned from an async API function. All async API functions will return a Promise with this object.
 export interface ReturnObject<DataType> {
@@ -290,5 +292,95 @@ export const removePostFromUserObject = async (
 	} catch (e) {
 		console.log("Error from 'removePostFromUserObject' in 'users.ts'", e);
 		throw e;
+	}
+};
+
+export const updateUserValues = async (
+	propertyName: string,
+	value: string
+): APIReturn<null> => {
+	try {
+		switch (propertyName) {
+			case "displayName":
+				return await updateName(value);
+			case "email":
+				return await updateEmail(value);
+			case "password":
+				return await updatePassword(value);
+			default:
+				throw Error(
+					"We couldn't find what you wanted to change. Try logging out then back in."
+				);
+		}
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};
+
+export const updateName = async (value: string) => {
+	try {
+		const currentUser = firebase.auth().currentUser;
+		await currentUser.updateProfile({
+			displayName: value,
+		});
+		await firestore.collection("users").doc(currentUser.uid).update({
+			displayName: value,
+		});
+
+		const apiReturn = await getPostsByUserId(currentUser.uid);
+		if (apiReturn.message[0] === "E" || !apiReturn.data) {
+			throw Error(apiReturn.message);
+		}
+		const posts = apiReturn.data;
+
+		const batch = firestore.batch();
+		for (const post of posts) {
+			const postRef = firestore.collection("posts").doc(post.postId);
+			batch.update(postRef, { authorName: value });
+		}
+		await batch.commit();
+
+		return {
+			message: `Success! The property was changed.`,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};
+
+export const updateEmail = async (value: string) => {
+	try {
+		validateEmail(value);
+		const currentUser = firebase.auth().currentUser;
+		await currentUser.updateEmail(value);
+		await firestore.collection("users").doc(currentUser.uid).update({
+			email: value,
+		});
+		return {
+			message: `Success! The property was changed.`,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};
+
+export const updatePassword = async (value: string) => {
+	try {
+		validatePassword(value);
+		const currentUser = firebase.auth().currentUser;
+		await currentUser.updatePassword(value);
+		return {
+			message: `Success! The property was changed.`,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
 	}
 };

@@ -82,12 +82,31 @@
 	margin-left: 20px;
 	background: $brightRed;
 	color: white;
-
 	transition: border-width 300ms ease-in-out;
 }
-
 .btn-bold-red:hover {
 	border: 5px solid $brightRed;
+}
+
+.btn-bold-blue {
+	font-family: "heebo-bold";
+	border-radius: 10px;
+	margin-left: 20px;
+	background: $lightBlue;
+	color: white;
+	transition: border-width 300ms ease-in-out;
+}
+.btn-bold-blue:hover {
+	border: 5px solid $lightBlue;
+}
+
+.btn-regular-blue {
+	font-family: "heebo-regular";
+	border-radius: 10px;
+	margin-left: 20px;
+	background: $lightBlue;
+	color: white;
+	transition: border-width 300ms ease-in-out;
 }
 
 .btn-bold-muted {
@@ -99,8 +118,13 @@
 	transition: border-width 300ms ease-in-out;
 }
 
-.btn-bold-muted:hover {
-	border: 5px solid $mutedRed;
+.btn-light-muted {
+	font-family: "heebo-regular";
+	border-radius: 10px;
+	margin-left: 20px;
+	background: $mutedRed;
+	color: $brightRed;
+	transition: border-width 300ms ease-in-out;
 }
 
 .form-input {

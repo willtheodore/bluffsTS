@@ -362,3 +362,27 @@ export const getPostsByDate = async (
 		throw e;
 	}
 };
+
+export const getPostsByUserId = async (id: string): APIReturn<FSPost[]> => {
+	try {
+		const query = await firestore
+			.collection("posts")
+			.where("author", "==", id)
+			.get();
+		let result: FSPost[] = [];
+		query.forEach((post: DocumentSnapshot) => {
+			result.push({
+				postId: post.id,
+				...post.data(),
+			});
+		});
+		return {
+			message: `Success. Posts from author with id ${id} have been returned.`,
+			data: result,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};

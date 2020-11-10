@@ -51,6 +51,7 @@ export default function BlogPost({
 			fontFamily: "heebo-regular",
 			fontSize: "18px",
 			margin: "0",
+			whiteSpace: "pre-line",
 		},
 	};
 
@@ -91,7 +92,7 @@ export default function BlogPost({
 			<hr style={styles.hr} />
 			<p
 				className="format-links"
-				style={styles.content}
+				style={styles.content as CSSProperties}
 				dangerouslySetInnerHTML={{ __html: formatLinks(newContent) }}
 			/>
 		</div>

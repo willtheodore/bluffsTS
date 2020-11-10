@@ -100,7 +100,7 @@ export default function EventDetail({ passedEvent = null }: EventDetailProps) {
 						event.endTime
 					)}`}</p>
 					<p
-						className="format-links"
+						className="format-links event-content"
 						dangerouslySetInnerHTML={{ __html: formatLinks(event.description) }}
 					></p>
 				</div>

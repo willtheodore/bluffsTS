@@ -196,6 +196,10 @@
 			.event-detail {
 				margin: 0 20px 20px;
 
+				.event-content {
+					white-space: pre-line;
+				}
+
 				.header h1 {
 					font-size: 36px;
 				}
@@ -215,6 +219,46 @@
 		#account {
 			height: 100%;
 			width: 100%;
+			margin: 0 20px;
+
+			.delete-account {
+				margin-left: 310px;
+			}
+
+			.edit-field {
+				display: grid;
+				grid-template-columns: 300px 1fr;
+				padding: 20px 10px;
+				label {
+					font-family: "heebo-regular";
+					font-size: 24px;
+					text-align: right;
+					align-self: center;
+					grid-column: 1/2;
+					margin-right: 10px;
+				}
+				.result {
+					grid-column: 2/3;
+				}
+			}
+
+			.fields {
+				display: flex;
+				grid-column: 2/3;
+				input {
+					align-self: center;
+					padding-left: 10px;
+					font-family: "heebo-regular";
+					font-size: 18px;
+					background-color: $mutedRed;
+					border: none;
+					width: max(40%, 150px);
+					height: 36px;
+				}
+				input:focus {
+					outline: none;
+				}
+			}
 		}
 
 		#admin {
