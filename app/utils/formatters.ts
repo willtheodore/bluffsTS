@@ -227,3 +227,16 @@ export function formatLinks(text: string): string {
 	const linkExpression = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/gi;
 	return text.replace(linkExpression, "<a href='//$&' target='_blank'>$&</a>");
 }
+
+export function formatTabs(text: string): string {
+	const tabSeparator = "%t";
+	const textParts = text.split(tabSeparator);
+	if (textParts === undefined) {
+		return text;
+	}
+	let result = "<div class='inline-tabs'>";
+	for (const part of textParts) {
+		result = result.concat(`<p>${part}</p>`);
+	}
+	return result.concat("</div>");
+}

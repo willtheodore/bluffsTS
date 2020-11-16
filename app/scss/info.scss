@@ -45,13 +45,15 @@
 
 		.text-wrapper {
 			flex: 3 400px;
+			width: 70%;
 		}
 
 		.body-image {
 			margin-top: 10px;
 			align-self: center;
 			object-fit: cover;
-			flex: 1 200px;
+			width: 30%;
+			flex: 200px;
 			border-width: 3px;
 			border-color: white;
 			border-style: solid;

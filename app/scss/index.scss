@@ -17,6 +17,19 @@ html {
 	cursor: default;
 }
 
+.inline-tabs {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+strong {
+	font-family: "heebo-bold";
+	font-weight: normal;
+}
+
 textarea:focus {
 	outline: none;
 }

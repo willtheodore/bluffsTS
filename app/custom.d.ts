@@ -3,13 +3,13 @@ declare module "*.png" {
 	export default value;
 }
 
-declare module "*jpg" {
+declare module "*.jpg" {
 	const value: any;
 	export default value;
 }
 
 // a comment
-declare module ".jpeg" {
+declare module "*.jpeg" {
 	const value: any;
 	export default value;
 }

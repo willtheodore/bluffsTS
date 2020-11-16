@@ -13,7 +13,8 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 
 const Home = React.lazy(() => import("./pages/Home"));
-const Info = React.lazy(() => import("./pages/Info"));
+const Swim = React.lazy(() => import("./pages/Swim"));
+const Tennis = React.lazy(() => import("./pages/Tennis"));
 const About = React.lazy(() => import("./pages/About"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const Members = React.lazy(() => import("./pages/Members"));
@@ -79,12 +80,8 @@ const App: React.FC = () => {
 						<Nav />
 						<Switch>
 							<Route exact path="/" component={Home} />
-							<Route exact path="/swim">
-								<Info title="swim" alignment="left" />
-							</Route>
-							<Route exact path="/tennis">
-								<Info title="tennis" alignment="right" />
-							</Route>
+							<Route exact path="/swim" component={Swim} />
+							<Route exact path="/tennis" component={Tennis} />
 							<Route exact path="/about" component={About} />
 							<Route exact path="/contact" component={Contact} />
 							<Route path="/members" component={Members} />

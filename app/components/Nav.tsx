@@ -57,7 +57,7 @@ export default function Nav() {
 						<p>Tennis</p>
 					</NavLink>
 					<NavLink activeStyle={activeStyle} to="/about/">
-						<p>About</p>
+						<p>Social</p>
 					</NavLink>
 					<NavLink activeStyle={activeStyle} to="/contact/">
 						<p>Contact</p>
