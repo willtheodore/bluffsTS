@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { formatTabs } from "../utils/formatters";
-import { getCloudContent } from "../utils/pages";
+import { formatLinks } from "../utils/formatters";
+import { FSParagraph, getCloudContent } from "../utils/pages";
 
 type JSXFunction = () => JSX.Element;
 
@@ -18,7 +18,12 @@ export default function useCloudContent(requestId: string): JSXFunction {
 			setContent([apiReponse.message]);
 			return;
 		}
-		setContent(apiReponse.data);
+
+		const result: string[] = apiReponse.data.map(
+			(paragraph: FSParagraph) => paragraph.content
+		);
+
+		setContent(result);
 	};
 
 	const getContent = () => {
@@ -27,8 +32,9 @@ export default function useCloudContent(requestId: string): JSXFunction {
 				{content.map((paragraph: string) => {
 					return (
 						<p
-							style={{ whiteSpace: "pre" }}
-							dangerouslySetInnerHTML={{ __html: formatTabs(paragraph) }}
+							key={paragraph.slice(0, 20)}
+							style={{ whiteSpace: "pre-wrap" }}
+							dangerouslySetInnerHTML={{ __html: formatLinks(paragraph) }}
 						></p>
 					);
 				})}

@@ -41,7 +41,7 @@ export default function Members() {
 				id="center-flow"
 				style={{ flexDirection: window.innerWidth > 700 ? "row" : "column" }}
 			>
-				<Sidebar isAdmin={user.isAdmin} />
+				<Sidebar isAdmin={user.isAdmin ? user.isAdmin : false} />
 				<React.Suspense
 					fallback={
 						<div

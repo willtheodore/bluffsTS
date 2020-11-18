@@ -43,7 +43,7 @@ export default function Info({ alignment, title }: InfoProps) {
 	const getBody = (): JSX.Element => {
 		return (
 			<div className="body-wrapper">
-				<div className="text-wrapper content-wrapper">
+				<div className="text-wrapper content-wrapper cloud-content">
 					<>{getContent()}</>
 				</div>
 				<img

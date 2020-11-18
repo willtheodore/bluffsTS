@@ -1,11 +1,18 @@
 import * as React from "react";
 import { useContext, Suspense } from "react";
-import { FaPencilAlt, FaEdit, FaLock, FaCalendar } from "react-icons/fa";
+import {
+	FaPencilAlt,
+	FaEdit,
+	FaLock,
+	FaCalendar,
+	FaParagraph,
+} from "react-icons/fa";
 
 import AuthContext from "../../contexts/auth";
 import Selector from "../Selector";
 import { parsePath } from "../../utils/formatters";
 import { BluffsUser } from "../../utils/users";
+import EditPages from "./EditPages";
 
 const CreatePost = React.lazy(() => import("./CreatePost"));
 const CalendarEvents = React.lazy(() => import("./CalendarEvents"));
@@ -31,18 +38,26 @@ export default function Admin() {
 		<div id="admin">
 			<Selector
 				className="admin-selector"
-				icons={[<FaPencilAlt />, <FaEdit />, <FaCalendar />, <FaLock />]}
+				icons={[
+					<FaPencilAlt />,
+					<FaEdit />,
+					<FaCalendar />,
+					<FaLock />,
+					<FaParagraph />,
+				]}
 				items={[
 					"Create Post",
 					"Manage Posts",
 					"Calendar Events",
 					"Manage Admins",
+					"Edit Pages",
 				]}
 				linkDestinations={[
 					"createPost",
 					"managePosts",
 					"calendarEvents",
 					"manageAdmins",
+					"editPages",
 				]}
 			/>
 			<Suspense
@@ -64,6 +79,7 @@ export default function Admin() {
 				{pathInContext === "managePosts" && <ManagePosts />}
 				{pathInContext === "calendarEvents" && <CalendarEvents />}
 				{pathInContext === "manageAdmins" && <ManageAdmins user={user} />}
+				{pathInContext === "editPages" && <EditPages user={user} />}
 			</Suspense>
 		</div>
 	);

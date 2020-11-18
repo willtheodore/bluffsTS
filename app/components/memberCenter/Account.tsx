@@ -93,7 +93,7 @@ function EditField({ propertyName, label, confirm = false }: EditFieldProps) {
 						ref={newInput}
 						disabled={!editValue}
 						type="text"
-						placeholder={user[propertyName]}
+						placeholder={propertyName !== "password" ? user[propertyName]! : ""}
 					/>
 					{!confirm && getButtons()}
 				</div>

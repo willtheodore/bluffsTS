@@ -23,7 +23,7 @@ export default function Home() {
 					alt="A group of kids play in a pool."
 				/>
 			</div>
-			<div className="content-wrapper" id="home-wrapper">
+			<div className="content-wrapper cloud-content" id="home-wrapper">
 				<h2>The Best Way to Spend Your Family's Summer.</h2>
 				<HorizonalBreakSm />
 				{getContent()}

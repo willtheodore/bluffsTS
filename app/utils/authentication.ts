@@ -1,5 +1,5 @@
-import firebase from "../firebase.js";
-import { ReturnObject } from "./users.js";
+import firebase from "../firebase";
+import { ReturnObject } from "./users";
 
 type APIReturn<T> = Promise<ReturnObject<T>>;
 
@@ -186,6 +186,10 @@ export const addName = async (
 ): APIReturn<null> => {
 	try {
 		const currentUser = firebase.auth().currentUser;
+		if (!currentUser) {
+			throw Error("Please sign in.");
+		}
+
 		await currentUser.updateProfile({
 			displayName: `${firstName} ${lastName}`,
 		});
@@ -255,23 +259,19 @@ export function validateEmail(email: string): boolean {
  * @returns {boolean} true if the password is valid, throws an error otherwise
  */
 export function validatePassword(password: string) {
-	try {
-		const length = password.length;
+	const length = password.length;
 
-		// check for invalid characters
-		if (!checkCharacters(expandedChars, password)) {
-			throw Error("Invalid password");
-		}
-
-		// check for proper length
-		if (length < 8 || length > 20) {
-			throw Error("Invalid password");
-		}
-
-		return true;
-	} catch (e) {
-		throw e;
+	// check for invalid characters
+	if (!checkCharacters(expandedChars, password)) {
+		throw Error("Invalid password");
 	}
+
+	// check for proper length
+	if (length < 8 || length > 20) {
+		throw Error("Invalid password");
+	}
+
+	return true;
 }
 
 /**

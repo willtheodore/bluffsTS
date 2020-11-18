@@ -46,6 +46,9 @@ export default function ManagePosts() {
 		try {
 			if (user) {
 				const userResult = await getUserById(user.uid);
+				if (!userResult.data) {
+					throw Error(userResult.message);
+				}
 				setUserObj(userResult.data);
 			} else setUserObj(null);
 		} catch (e) {

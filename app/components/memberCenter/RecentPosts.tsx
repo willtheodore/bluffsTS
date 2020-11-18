@@ -30,7 +30,7 @@ export default function RecentPosts() {
 			{posts != null && (
 				<ul>
 					{posts.map((post) => (
-						<li key={post.datePosted}>
+						<li key={post.datePosted.seconds}>
 							<BlogPost
 								title={post.title}
 								authorName={post.authorName}

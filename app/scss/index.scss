@@ -6,6 +6,7 @@
 @import "./components.scss";
 @import "./contact.scss";
 @import "./members.scss";
+@import "./cloudContent.scss";
 
 #app,
 body,
@@ -23,11 +24,6 @@ html {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-}
-
-strong {
-	font-family: "heebo-bold";
-	font-weight: normal;
 }
 
 textarea:focus {

@@ -23,17 +23,21 @@ export default function CreatePost({ user }: CreatePostProps) {
 
 	const handleSubmit = async () => {
 		try {
-			if (title.current && content.current) {
+			if (title.current && content.current && user.displayName) {
 				const timestamp = new Date(Date.now());
-				const docRef = await addNewPost(
+				const apiResponse = await addNewPost(
 					user.uid,
 					user.displayName,
 					timestamp,
 					title.current.value,
 					content.current.value
 				);
-				await addPostToUserObject(user.uid, docRef.data.id);
-				setResult(docRef.message);
+				if (!apiResponse.data) {
+					throw Error(apiResponse.message);
+				}
+
+				await addPostToUserObject(user.uid, apiResponse.data.id);
+				setResult(apiResponse.message);
 			} else {
 				throw Error("No value for title and/or content.");
 			}

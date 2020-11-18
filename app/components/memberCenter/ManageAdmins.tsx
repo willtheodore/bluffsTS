@@ -136,7 +136,12 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 
 						return (
 							<li key={admin}>
-								<AdminRow name={name} email={email} id={admin} user={user} />
+								<AdminRow
+									name={name}
+									email={email}
+									id={admin}
+									user={user as DatabaseUser}
+								/>
 							</li>
 						);
 					})}

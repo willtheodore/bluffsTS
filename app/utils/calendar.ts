@@ -10,7 +10,7 @@ import {
 export interface FSEvent {
 	categories?: FSEventCategory;
 	title: string;
-	eventId: string;
+	eventId?: string;
 	startTime: string;
 	endTime: string;
 	description: string;
@@ -52,9 +52,10 @@ export const getEventsByDate = async (
 
 		let events: FSEvent[] = [];
 		dayQuery.forEach((event: DocumentSnapshot) => {
+			const eventData = event.data() as FSEvent;
 			events.push({
 				eventId: event.id,
-				...event.data(),
+				...eventData,
 			});
 		});
 
@@ -92,9 +93,10 @@ export const getEventsByMonth = async (
 
 		let events: FSEvent[] = [];
 		eventsQuery.forEach((event: DocumentSnapshot) => {
+			const eventData = event.data() as FSEvent;
 			events.push({
 				eventId: event.id,
-				...event.data(),
+				...eventData,
 			});
 		});
 
@@ -125,7 +127,7 @@ export const deleteEventById = async (id: string): APIReturn<null> => {
 export const getEventById = async (id: string): APIReturn<FSEvent> => {
 	try {
 		const eventSnapshot = await firestore.collection("events").doc(id).get();
-		const event = eventSnapshot.data();
+		const event = eventSnapshot.data() as FSEvent;
 		return {
 			message: "Success. Returning the event",
 			data: {
@@ -144,13 +146,13 @@ type UpdateEvent = (event: FSEvent) => void;
 export const setEventListenerById = async (
 	id: string,
 	onChange: UpdateEvent
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
-		const docRef = await firestore
+		firestore
 			.collection("events")
 			.doc(id)
 			.onSnapshot((eventSnapshot: DocumentSnapshot) => {
-				const event = eventSnapshot.data();
+				const event = eventSnapshot.data() as FSEvent;
 				if (event) {
 					onChange({
 						eventId: eventSnapshot.id,
@@ -160,7 +162,7 @@ export const setEventListenerById = async (
 			});
 		return {
 			message: "Success! Listener set.",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		return {
@@ -177,7 +179,7 @@ export const setEventListenersByDate = async (
 	onChange: UpdateEvents
 ): APIReturn<CollectionReference> => {
 	try {
-		await firestore
+		firestore
 			.collection("events")
 			.where("day", "==", day)
 			.where("month", "==", month)
@@ -185,9 +187,10 @@ export const setEventListenersByDate = async (
 			.onSnapshot((eventsSnapshot: QuerySnapshot) => {
 				let result: FSEvent[] = [];
 				eventsSnapshot.forEach((event: DocumentSnapshot) => {
+					const eventData = event.data() as FSEvent;
 					result.push({
 						eventId: event.id,
-						...event.data(),
+						...eventData,
 					});
 				});
 				onChange(result);

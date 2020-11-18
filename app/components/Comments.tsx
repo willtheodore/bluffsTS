@@ -80,7 +80,7 @@ export default function Comments({ comments, postId }: CommentsProps) {
 		}
 		const cVal = newComment.current.value;
 		const uid = user.uid;
-		const authorName = user.displayName;
+		const authorName = user.displayName ? user.displayName : "DISPLAY NAME";
 		const timestamp = new Date(Date.now());
 		const commentsObj = comments != undefined ? comments : null;
 

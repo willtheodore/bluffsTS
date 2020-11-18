@@ -45,7 +45,7 @@ export default function EventDetail({ passedEvent = null }: EventDetailProps) {
 					}
 				);
 
-				if (!apiResponse.data) {
+				if (apiResponse.message[0] !== "S") {
 					setError(apiResponse.message);
 				}
 			}

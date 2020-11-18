@@ -23,9 +23,13 @@ export default function Archive() {
 	const getPostsForArchive = async () => {
 		try {
 			if (month && year) {
-				const postsResult = await getPostsByDate(month, year);
+				const apiResponse = await getPostsByDate(month, year);
+				if (!apiResponse.data) {
+					throw Error(apiResponse.message);
+				}
+
 				setPosts((prevPosts: FSPostArchive) => ({
-					[`${month}/${year}`]: formatPosts(postsResult.data),
+					[`${month}/${year}`]: formatPosts(apiResponse.data!),
 					...prevPosts,
 				}));
 				setError(null);

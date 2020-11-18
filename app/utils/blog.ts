@@ -47,11 +47,12 @@ const FieldValue = firebase.firestore.FieldValue;
 export const getPostById = async (id: string): APIReturn<FSPost> => {
 	try {
 		const post = await firestore.collection("posts").doc(id).get();
+		const postData = post.data() as FSPost;
 		return {
 			message: "success",
 			data: {
 				postId: post.id,
-				...post.data(),
+				...postData,
 			},
 		};
 	} catch (e) {
@@ -145,7 +146,8 @@ export const setPostListenerByIds = (
 		.onSnapshot((posts: QuerySnapshot) => {
 			let result: FSPost[] = [];
 			posts.forEach((post: DocumentSnapshot) => {
-				const formattedPost = formatPosts([post.data()])[0];
+				const postData = post.data() as FSPost;
+				const formattedPost = formatPosts([postData])[0];
 				result.push({
 					postId: post.id,
 					...formattedPost,
@@ -200,15 +202,12 @@ export const updatePostTitleAndContent = async (
 	postId: string,
 	title: string,
 	content: string
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
-		const docRef = await firestore
-			.collection("posts")
-			.doc(postId)
-			.update({ title, content });
+		await firestore.collection("posts").doc(postId).update({ title, content });
 		return {
 			message: "success",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		console.log("Error from 'updatePostTitleAndContent' in 'blog.ts'", e);
@@ -268,9 +267,9 @@ export const postComment = async (
 	timestamp: Date,
 	content: string,
 	comments: FSCommentCollection | null
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
-		const docRef = await firestore
+		await firestore
 			.collection("posts")
 			.doc(postId)
 			.update({
@@ -284,7 +283,7 @@ export const postComment = async (
 					...comments,
 				},
 			});
-		return { message: "success", data: docRef };
+		return { message: "success", data: null };
 	} catch (e) {
 		console.log("Error from 'postComment' in 'blog.ts'", e);
 		throw e;
@@ -301,15 +300,15 @@ export const postComment = async (
 export const deleteCommentById = async (
 	postId: string,
 	commentId: string
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
-		const docRef = await firestore
+		await firestore
 			.collection("posts")
 			.doc(postId)
 			.update({
 				[`comments.${commentId}`]: FieldValue.delete(),
 			});
-		return { message: "success", data: docRef };
+		return { message: "success", data: null };
 	} catch (e) {
 		console.log("Error from 'deleteCommentById' in 'blog.ts'", e);
 		throw e;
@@ -319,7 +318,7 @@ export const deleteCommentById = async (
 export const getPostsByDate = async (
 	month: string,
 	year: number
-): APIReturn<DocumentReference> => {
+): APIReturn<FSPost[]> => {
 	try {
 		const months = [
 			"Jan",
@@ -346,9 +345,10 @@ export const getPostsByDate = async (
 			.get();
 		let result: FSPost[] = [];
 		posts.forEach((post: DocumentSnapshot) => {
+			const postData = post.data() as FSPost;
 			result.push({
 				postId: post.id,
-				...post.data(),
+				...postData,
 			});
 		});
 		result = _.sortBy(result, ["datePosted"]);
@@ -371,9 +371,10 @@ export const getPostsByUserId = async (id: string): APIReturn<FSPost[]> => {
 			.get();
 		let result: FSPost[] = [];
 		query.forEach((post: DocumentSnapshot) => {
+			const postData = post.data() as FSPost;
 			result.push({
 				postId: post.id,
-				...post.data(),
+				...postData,
 			});
 		});
 		return {

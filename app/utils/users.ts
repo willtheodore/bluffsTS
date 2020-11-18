@@ -18,7 +18,7 @@ export interface DatabaseUser {
 
 // Represents a user object from firebase authenticaion with the addition of the isAdmin property.
 type IsAdmin = { isAdmin?: boolean };
-export type BluffsUser = IsAdmin & firebase.User;
+export interface BluffsUser extends IsAdmin, firebase.User {}
 
 export interface FSAdminsCollection {
 	[key: string]: true;
@@ -41,15 +41,16 @@ const FieldValue = firebase.firestore.FieldValue;
  * @param id {string} - an id corresponding to the user document to retrieve
  * @returns {APIReturn<DocumentData>} a Promise containing the document data and a success message
  */
-export const getUserById = async (id: string): APIReturn<DocumentData> => {
+export const getUserById = async (id: string): APIReturn<DatabaseUser> => {
 	try {
-		const userDocRef: DocumentSnapshot = await firestore
+		const userSnapshot: DocumentSnapshot = await firestore
 			.collection("users")
 			.doc(id)
 			.get();
 
+		const userData = userSnapshot.data() as DatabaseUser;
 		return {
-			data: userDocRef.data(),
+			data: userData,
 			message: "success",
 		};
 	} catch (e) {
@@ -74,9 +75,10 @@ export const getUsersByIds = async (
 			.get();
 		let result: DatabaseUser[] = [];
 		usersMatchingIds.forEach((user: DocumentSnapshot) => {
+			const userData: DatabaseUser = user.data() as DatabaseUser;
 			result.push({
 				uid: user.id,
-				...user.data(),
+				...userData,
 			});
 		});
 
@@ -109,9 +111,10 @@ export const searchForUserByEmail = async (
 			if (result) {
 				throw Error("Multiple users with the same email");
 			}
+			const userData = user.data() as DatabaseUser;
 			result = {
 				uid: user.id,
-				...user.data(),
+				...userData,
 			};
 		});
 
@@ -141,14 +144,14 @@ export const addUserToFirestore = async (
 	email: string,
 	firstName: string,
 	lastName: string
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
 		const currentUser = firebase.auth().currentUser;
 		if (!currentUser) {
 			throw Error("No user signed in while trying to add to firestore");
 		}
 
-		const docRef: DocumentReference = await firestore
+		await firestore
 			.collection("users")
 			.doc(currentUser.uid)
 			.set({
@@ -158,7 +161,7 @@ export const addUserToFirestore = async (
 
 		return {
 			message: "success",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		console.log("Error from 'addUserToFirestore' in 'users.ts'", e);
@@ -172,11 +175,9 @@ export const addUserToFirestore = async (
  * @param id {string} the id of the user to add to the admins doc in firestore
  * @returns {APIReturn<DocumentReference} a Promise containing the DocumentReference of the admin document and a success message
  */
-export const addUserToAdmins = async (
-	id: string
-): APIReturn<DocumentReference> => {
+export const addUserToAdmins = async (id: string): APIReturn<null> => {
 	try {
-		const docRef: DocumentReference = await firestore
+		await firestore
 			.collection("users")
 			.doc("admins")
 			.update({
@@ -184,7 +185,7 @@ export const addUserToAdmins = async (
 			});
 		return {
 			message: "success",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		console.log("Error from 'addUserToAdmins' in 'users.ts'", e);
@@ -198,11 +199,9 @@ export const addUserToAdmins = async (
  * @param id {string} the id of the user to remove
  * @returns {APIReturn<DocumentReference>} a Promise containing the DocumentReference of the admins document and a success message
  */
-export const removeUserFromAdmins = async (
-	id: string
-): APIReturn<DocumentReference> => {
+export const removeUserFromAdmins = async (id: string): APIReturn<null> => {
 	try {
-		const docRef: DocumentReference = await firestore
+		await firestore
 			.collection("users")
 			.doc("admins")
 			.update({
@@ -210,7 +209,7 @@ export const removeUserFromAdmins = async (
 			});
 		return {
 			message: "success",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		console.log("Error from 'removeUserFromAdmins' in 'users.ts'", e);
@@ -249,9 +248,9 @@ export const getAdmins = async (): APIReturn<FSAdminsCollection> => {
 export const addPostToUserObject = async (
 	uid: string,
 	postId: string
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
-		const docRef: DocumentReference = await firestore
+		await firestore
 			.collection("users")
 			.doc(uid)
 			.update({
@@ -259,7 +258,7 @@ export const addPostToUserObject = async (
 			});
 		return {
 			message: "success",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		console.log("Error from 'addPostToUserObject' in 'users.ts'", e);
@@ -277,9 +276,9 @@ export const addPostToUserObject = async (
 export const removePostFromUserObject = async (
 	uid: string,
 	postId: string
-): APIReturn<DocumentReference> => {
+): APIReturn<null> => {
 	try {
-		const docRef: DocumentReference = await firestore
+		await firestore
 			.collection("users")
 			.doc(uid)
 			.update({
@@ -287,7 +286,7 @@ export const removePostFromUserObject = async (
 			});
 		return {
 			message: "success",
-			data: docRef,
+			data: null,
 		};
 	} catch (e) {
 		console.log("Error from 'removePostFromUserObject' in 'users.ts'", e);
@@ -322,6 +321,10 @@ export const updateUserValues = async (
 export const updateName = async (value: string) => {
 	try {
 		const currentUser = firebase.auth().currentUser;
+		if (!currentUser) {
+			throw Error("Please sign in.");
+		}
+
 		await currentUser.updateProfile({
 			displayName: value,
 		});
@@ -356,6 +359,10 @@ export const updateEmail = async (value: string) => {
 	try {
 		validateEmail(value);
 		const currentUser = firebase.auth().currentUser;
+		if (!currentUser) {
+			throw Error("Please sign in.");
+		}
+
 		await currentUser.updateEmail(value);
 		await firestore.collection("users").doc(currentUser.uid).update({
 			email: value,
@@ -374,6 +381,10 @@ export const updatePassword = async (value: string) => {
 	try {
 		validatePassword(value);
 		const currentUser = firebase.auth().currentUser;
+		if (!currentUser) {
+			throw Error("Please sign in.");
+		}
+
 		await currentUser.updatePassword(value);
 		return {
 			message: `Success! The property was changed.`,

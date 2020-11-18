@@ -1,0 +1,21 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+.cloud-content {
+	strong {
+		font-family: "heebo-bold";
+		font-weight: normal;
+	}
+
+	blockquote {
+		margin: 0 inherit !important;
+		border-radius: 5px;
+		background-color: $mutedRed;
+		padding: 10px;
+	}
+
+	a {
+		color: $lightBlue !important;
+		font-family: "heebo-bold";
+	}
+}

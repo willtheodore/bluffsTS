@@ -267,7 +267,7 @@
 
 			.admin-selector {
 				margin: 0 20px 10px;
-				width: 60%;
+				width: max(500px, 60%);
 			}
 
 			//----------------------------------
@@ -476,6 +476,53 @@
 					button {
 						margin: 10px 0;
 					}
+				}
+			}
+
+			#edit-pages {
+				margin: 0 20px;
+
+				.content-wrapper {
+					margin: 10px 0;
+				}
+
+				.edit-paragraph {
+					margin-top: 10px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					width: 100%;
+
+					svg {
+						color: $lightBlue;
+						margin-right: 20px;
+					}
+				}
+				.edit-paragraph-body {
+					width: 100%;
+					min-height: 120px;
+					padding: 10px;
+					resize: vertical;
+					border: none;
+					white-space: pre-wrap;
+					font-family: "heebo-regular";
+					font-size: 14px;
+					background-color: $mutedRed;
+				}
+
+				.buttons {
+					display: flex;
+					flex-direction: column;
+				}
+				.minus {
+					margin-left: 20px;
+					cursor: pointer;
+				}
+				.add-paragraph {
+					margin-right: 50%;
+					margin-left: 50%;
+					margin-top: 10px;
+					cursor: pointer;
 				}
 			}
 		}
