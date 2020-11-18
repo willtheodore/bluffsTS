@@ -6,6 +6,7 @@ import {
 	FaPencilAlt,
 	FaPlusCircle,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import {
 	changeParagraphByNumber,
 	setCloudContentListener,
@@ -100,6 +101,11 @@ export default function EditPages({ user }: EditPagesProps) {
 				items={["Home", "Swim", "Tennis", "Social", "Contact"]}
 			/>
 			<div className="content-wrapper">
+				<Link to="/composition-cheat-sheet">
+					Here's a helpful tutorial on tags and how they will affect your
+					layout! I recommend reading it before you edit any content on this
+					page.
+				</Link>
 				{pageData &&
 					pageData.map((paragraph: FSParagraph) => (
 						<div key={paragraph.paragraphNumber}>

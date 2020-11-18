@@ -9,7 +9,7 @@ export default function Contact() {
 	return (
 		<div id="contact-wrapper">
 			<Header text="contact" />
-			<div className="content-wrapper">
+			<div className="content-wrapper cloud-content">
 				<>{getContent()}</>
 			</div>
 		</div>

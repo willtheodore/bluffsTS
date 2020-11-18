@@ -482,6 +482,14 @@
 			#edit-pages {
 				margin: 0 20px;
 
+				a {
+					font-family: "heebo-regular";
+					color: $lightBlue;
+				}
+				a:hover {
+					font-family: "heebo-bold";
+				}
+
 				.content-wrapper {
 					margin: 10px 0;
 				}

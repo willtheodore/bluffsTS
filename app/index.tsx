@@ -18,6 +18,7 @@ const Tennis = React.lazy(() => import("./pages/Tennis"));
 const About = React.lazy(() => import("./pages/About"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const Members = React.lazy(() => import("./pages/Members"));
+const CheatSheet = React.lazy(() => import("./pages/CheatSheet"));
 
 const App: React.FC = () => {
 	const [user, setUser] = React.useState<BluffsUser | null>(null);
@@ -84,6 +85,11 @@ const App: React.FC = () => {
 							<Route exact path="/tennis" component={Tennis} />
 							<Route exact path="/about" component={About} />
 							<Route exact path="/contact" component={Contact} />
+							<Route
+								exact
+								path="/composition-cheat-sheet"
+								component={CheatSheet}
+							/>
 							<Route path="/members" component={Members} />
 							<Route
 								render={() => (

@@ -10,7 +10,7 @@ export default function About() {
 	return (
 		<div id="about-wrapper">
 			<Header text="social" />
-			<div className="content-wrapper">
+			<div className="content-wrapper cloud-content">
 				<div className="float-right">
 					<img src={aboutImage} alt="People enjoying the bluffs" />
 				</div>

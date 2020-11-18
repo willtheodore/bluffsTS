@@ -24,7 +24,7 @@ export default function Home() {
 				/>
 			</div>
 			<div className="content-wrapper cloud-content" id="home-wrapper">
-				<h2>The Best Way to Spend Your Family's Summer.</h2>
+				<h1>The Best Way to Spend Your Family's Summer.</h1>
 				<HorizonalBreakSm />
 				{getContent()}
 			</div>
