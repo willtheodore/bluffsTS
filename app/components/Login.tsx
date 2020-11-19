@@ -30,8 +30,6 @@ interface LoginProps {
 	dismiss: VoidFunction;
 }
 
-//TODO: set up password validity detection
-
 export function FormInput({
 	setValue = null,
 	style = {},
@@ -83,7 +81,7 @@ function LoginContent({ setMode, dismiss }: LoginContentProps) {
 				setEmailStyle({ color: "green" });
 			}
 			if (validatePassword(password)) {
-				setPasswordStyle({ color: "red" });
+				setPasswordStyle({ color: "green" });
 			}
 		} catch (e) {
 			if (e.message === "Invalid email") {
