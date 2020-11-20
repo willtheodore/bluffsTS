@@ -10,6 +10,7 @@ import {
 	createAccount,
 	confirmNotEmpty,
 	addName,
+	validateMemberCode,
 } from "../utils/authentication";
 import { addUserToFirestore } from "../utils/users";
 import { SetState } from "./Selector";
@@ -148,6 +149,7 @@ function CreateContent({ setMode, dismiss }: LoginContentProps) {
 	const confirmPassword = React.createRef<HTMLInputElement>();
 	const firstName = React.createRef<HTMLInputElement>();
 	const lastName = React.createRef<HTMLInputElement>();
+	const memberCode = React.createRef<HTMLInputElement>();
 
 	const handleCreate = async () => {
 		if (
@@ -156,7 +158,8 @@ function CreateContent({ setMode, dismiss }: LoginContentProps) {
 			isNull(firstName.current) ||
 			isNull(lastName.current) ||
 			isNull(confirmEmail.current) ||
-			isNull(confirmPassword.current)
+			isNull(confirmPassword.current) ||
+			isNull(memberCode.current)
 		) {
 			return;
 		}
@@ -164,6 +167,7 @@ function CreateContent({ setMode, dismiss }: LoginContentProps) {
 		const pVal = password.current.value;
 		const firstVal = firstName.current.value;
 		const lastVal = lastName.current.value;
+		const codeVal = memberCode.current.value;
 
 		try {
 			const notEmpty = confirmNotEmpty([firstVal, lastVal, eVal, pVal]);
@@ -171,6 +175,13 @@ function CreateContent({ setMode, dismiss }: LoginContentProps) {
 			const passwordsMatch = pVal === confirmPassword.current.value;
 			const validEmail = validateEmail(eVal);
 			const validPassword = validatePassword(pVal);
+
+			const validCode = await validateMemberCode(codeVal);
+			if (!validCode) {
+				throw Error(
+					"Member code is not valid. Please check with Bluffs admin to make sure you have the right code."
+				);
+			}
 
 			if (
 				notEmpty &&
@@ -209,6 +220,7 @@ function CreateContent({ setMode, dismiss }: LoginContentProps) {
 				reference={confirmPassword}
 				labelText="confirm password"
 			/>
+			<FormInput reference={memberCode} labelText="member code" />
 			<div className="buttons">
 				<button onClick={() => setMode("login")} className="btn btn-bold-muted">
 					BACK

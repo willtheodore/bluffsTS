@@ -447,6 +447,35 @@
 					}
 				}
 
+				.member-code {
+					p {
+						font-family: "heebo-light";
+						color: $darkBlue;
+					}
+					h3 {
+						font-family: "heebo-bold";
+						font-weight: normal;
+					}
+					.input-row {
+						display: grid;
+						grid-template-columns: 1fr auto;
+					}
+					input {
+						grid-column: 1/2;
+						border: none;
+						background-color: $mutedRed;
+						font-family: "heebo-light";
+						font-size: 18px;
+						padding: 5px;
+					}
+					input:focus {
+						outline: none;
+					}
+					button {
+						grid-column: 2/3;
+					}
+				}
+
 				.input-field {
 					width: 100%;
 					display: flex;

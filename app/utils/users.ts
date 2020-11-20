@@ -395,3 +395,34 @@ export const updatePassword = async (value: string) => {
 		};
 	}
 };
+
+export const setMemberCodeListener = (onChange: (code: string) => void) => {
+	firestore
+		.collection("users")
+		.doc("memberCode")
+		.onSnapshot((docSnapshot: DocumentSnapshot) => {
+			const data = docSnapshot.data();
+			if (!data) {
+				return;
+			}
+			const memberCode = data.value;
+			onChange(memberCode);
+		});
+};
+
+export const changeMemberCode = async (code: string): APIReturn<null> => {
+	try {
+		await firestore.collection("users").doc("memberCode").set({
+			value: code,
+		});
+
+		return {
+			message: "Success. Member code value has been changed.",
+			data: null,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};

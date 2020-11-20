@@ -1,4 +1,4 @@
-import firebase from "../firebase";
+import firebase, { firestore } from "../firebase";
 import { ReturnObject } from "./users";
 
 type APIReturn<T> = Promise<ReturnObject<T>>;
@@ -288,3 +288,21 @@ export function confirmNotEmpty(array: string[]) {
 	}
 	return true;
 }
+
+export const validateMemberCode = async (code: string): Promise<boolean> => {
+	try {
+		const memberCodeSnapshot = await firestore
+			.collection("users")
+			.doc("memberCode")
+			.get();
+		const memberCodeData = memberCodeSnapshot.data();
+		if (!memberCodeData) {
+			return false;
+		}
+
+		const memberCode = memberCodeData.value;
+		return memberCode === code;
+	} catch (e) {
+		return false;
+	}
+};

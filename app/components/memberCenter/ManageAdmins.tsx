@@ -11,6 +11,8 @@ import {
 	addUserToAdmins,
 	BluffsUser,
 	DatabaseUser,
+	setMemberCodeListener,
+	changeMemberCode,
 } from "../../utils/users";
 
 interface ManageAdminsProps {
@@ -19,20 +21,29 @@ interface ManageAdminsProps {
 
 export default function ManageAdmins({ user }: ManageAdminsProps) {
 	const [admins, setAdmins] = useState<string[] | null>();
+	const [memberCode, setMemberCode] = useState<string>();
 	const [adminUserObjects, setAdminUserObjects] = useState<
 		DatabaseUser[] | null
 	>();
 	const [error, setError] = useState<string | null>(null);
 	const [result, setResult] = useState<string | DatabaseUser | null>(null);
+	const memberCodeRef = createRef<HTMLInputElement>();
 	const newAdmin = createRef<HTMLInputElement>();
 
 	useEffect(() => {
-		updateAdmins();
+		initializeComponent();
 	}, []);
 
 	useEffect(() => {
 		updateUsers();
 	}, [admins]);
+
+	const initializeComponent = async () => {
+		await updateAdmins();
+		setMemberCodeListener((code: string) => {
+			setMemberCode(code);
+		});
+	};
 
 	const updateAdmins = async () => {
 		try {
@@ -43,6 +54,7 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 					adminArr.push(id);
 				}
 				setAdmins(adminArr);
+				setError(null);
 			}
 		} catch (e) {
 			setError(e.message);
@@ -70,6 +82,7 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 				}
 				await addUserToAdmins(result.uid);
 				setResult("Success! The user was added to the list of admins.");
+				setError(null);
 			} else {
 				throw Error("Error getting result from search");
 			}
@@ -85,9 +98,24 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 			}
 			const userResult = await searchForUserByEmail(newAdmin.current.value);
 			setResult(userResult.data as DatabaseUser);
+			setError(null);
 		} catch (e) {
 			setError(e.message);
 		}
+	};
+
+	const handleChangeCode = async () => {
+		if (!memberCodeRef.current || memberCodeRef.current.value === "") {
+			setError("no value for member code input. Try again.");
+			return;
+		}
+		const memberCodeVal = memberCodeRef.current.value;
+
+		const apiResponse = await changeMemberCode(memberCodeVal);
+		if (apiResponse.message[0] !== "S") {
+			setError(apiResponse.message);
+		}
+		setError(null);
 	};
 
 	const getAdminInfo = (id: string): [string, string] => {
@@ -103,16 +131,6 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 		return ["DIPLAYNAME", "EMAIL"];
 	};
 
-	if (error) {
-		return (
-			<div id="manage-admins">
-				<div className="content-wrapper">
-					<p className="error">{error}</p>
-				</div>
-			</div>
-		);
-	}
-
 	if (!admins || !adminUserObjects) {
 		return (
 			<div id="manage-admins">
@@ -125,6 +143,12 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 
 	return (
 		<div id="manage-admins">
+			{error && (
+				<div className="content-wrapper">
+					<p className="error">{error}</p>
+				</div>
+			)}
+
 			<div className="content-wrapper">
 				<span>
 					<h3>Exisiting admins:</h3>
@@ -147,6 +171,20 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 					})}
 				</ul>
 			</div>
+
+			{memberCode && (
+				<div className="content-wrapper member-code">
+					<h3>Manage admin code</h3>
+					<p>Current code: {memberCode}</p>
+					<div className="input-row">
+						<input type="text" ref={memberCodeRef} />
+						<button className="btn btn-bold-red" onClick={handleChangeCode}>
+							CHANGE MEMBER CODE
+						</button>
+					</div>
+				</div>
+			)}
+
 			<div className="content-wrapper">
 				<span>
 					<h3>Add new admins:</h3>
@@ -162,11 +200,12 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 						SEARCH
 					</button>
 				</div>
+
 				{result && (
 					<div className="results-field">
-						<Fragment>
+						<>
 							{isOfType<DatabaseUser>(result, "uid") && (
-								<Fragment>
+								<>
 									<p>{`We were able to find ${result.displayName}. Add?`}</p>
 									<button
 										className="btn btn-bold-muted"
@@ -177,10 +216,11 @@ export default function ManageAdmins({ user }: ManageAdminsProps) {
 									<button className="btn btn-bold-red" onClick={handleAdd}>
 										ADD USER TO ADMINS
 									</button>
-								</Fragment>
+								</>
 							)}
+
 							{typeof result === "string" && <p>{result}</p>}
-						</Fragment>
+						</>
 					</div>
 				)}
 			</div>
@@ -221,7 +261,7 @@ function AdminRow({ name, email, id, user }: AdminRowProps) {
 	}
 
 	return (
-		<React.Fragment>
+		<>
 			<p>{name}</p>
 			<p>{email}</p>
 			{user.uid != id &&
@@ -243,6 +283,6 @@ function AdminRow({ name, email, id, user }: AdminRowProps) {
 						</button>
 					</div>
 				))}
-		</React.Fragment>
+		</>
 	);
 }
