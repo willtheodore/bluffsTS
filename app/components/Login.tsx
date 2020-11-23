@@ -22,6 +22,7 @@ interface FormInputProps {
 	type?: string;
 	reference?: RefObject<HTMLInputElement> | null;
 	labelText: string;
+	placeholder?: string | null;
 }
 interface LoginContentProps {
 	setMode: SetState<string>;
@@ -36,20 +37,33 @@ export function FormInput({
 	style = {},
 	type = "text",
 	reference = null,
+	placeholder = null,
 	labelText,
 }: FormInputProps) {
 	if (setValue)
 		return (
 			<div className="form-input">
 				<label htmlFor={labelText}>{labelText}</label>
-				<input style={style} type={type} id={labelText} onChange={setValue} />
+				<input
+					style={style}
+					placeholder={placeholder ? placeholder : undefined}
+					type={type}
+					id={labelText}
+					onChange={setValue}
+				/>
 			</div>
 		);
 
 	return (
 		<div className="form-input">
 			<label htmlFor={labelText}>{labelText}</label>
-			<input style={style} type={type} id={labelText} ref={reference} />
+			<input
+				placeholder={placeholder ? placeholder : undefined}
+				style={style}
+				type={type}
+				id={labelText}
+				ref={reference}
+			/>
 		</div>
 	);
 }

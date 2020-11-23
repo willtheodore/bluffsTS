@@ -19,6 +19,12 @@ html {
 	cursor: default;
 }
 
+.blue-hr {
+	color: $lightBlue;
+	border: none;
+	border-bottom: 2px solid;
+}
+
 .inline-tabs {
 	width: 100%;
 	display: flex;

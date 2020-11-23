@@ -562,6 +562,35 @@
 					cursor: pointer;
 				}
 			}
+			//----------------------
+			#post-jobs {
+				h2 {
+					font-family: "heebo-bold";
+					font-size: 36px;
+				}
+
+				.content-wrapper {
+					margin: 0 20px 20px;
+				}
+
+				.create-posting {
+					button {
+						margin-left: 180px;
+					}
+				}
+
+				.posting {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					padding: 10px 5px;
+
+					h4 {
+						font-family: "heebo-regular";
+						font-size: 24px;
+					}
+				}
+			}
 		}
 	}
 }
