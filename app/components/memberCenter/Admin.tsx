@@ -6,6 +6,7 @@ import {
 	FaLock,
 	FaCalendar,
 	FaParagraph,
+	FaClipboard,
 } from "react-icons/fa";
 
 import AuthContext from "../../contexts/auth";
@@ -13,6 +14,7 @@ import Selector from "../Selector";
 import { parsePath } from "../../utils/formatters";
 import { BluffsUser } from "../../utils/users";
 import EditPages from "./EditPages";
+import PostJobs from "./PostJobs";
 
 const CreatePost = React.lazy(() => import("./CreatePost"));
 const CalendarEvents = React.lazy(() => import("./CalendarEvents"));
@@ -44,6 +46,7 @@ export default function Admin() {
 					<FaCalendar />,
 					<FaLock />,
 					<FaParagraph />,
+					<FaClipboard />,
 				]}
 				items={[
 					"Create Post",
@@ -51,6 +54,7 @@ export default function Admin() {
 					"Calendar Events",
 					"Manage Admins",
 					"Edit Pages",
+					"Post Jobs",
 				]}
 				linkDestinations={[
 					"createPost",
@@ -58,6 +62,7 @@ export default function Admin() {
 					"calendarEvents",
 					"manageAdmins",
 					"editPages",
+					"postJobs",
 				]}
 			/>
 			<Suspense
@@ -80,6 +85,7 @@ export default function Admin() {
 				{pathInContext === "calendarEvents" && <CalendarEvents />}
 				{pathInContext === "manageAdmins" && <ManageAdmins user={user} />}
 				{pathInContext === "editPages" && <EditPages user={user} />}
+				{pathInContext === "postJobs" && <PostJobs />}
 			</Suspense>
 		</div>
 	);

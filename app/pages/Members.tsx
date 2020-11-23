@@ -23,6 +23,15 @@ export default function Members() {
 	const location = document.location;
 	const pathElements = parsePath(location);
 
+	const getHeader = () => {
+		if (pathElements[1] === "recent") return "Recent Posts";
+		if (pathElements[1] === "archive") return "Post Archive";
+		if (pathElements[1] === "calendar") return "Event Calendar";
+		if (pathElements[1] === "account") return "Account Settings";
+		if (pathElements[1] === "admin") return "Admin Center";
+		if (pathElements[1] === "postDetail") return "";
+	};
+
 	if (user === null) {
 		return (
 			<div id="members-wrapper">
@@ -36,7 +45,7 @@ export default function Members() {
 
 	return (
 		<div id="member-center">
-			<h1>Member Center</h1>
+			<h1>{getHeader()}</h1>
 			<div
 				id="center-flow"
 				style={{ flexDirection: window.innerWidth > 700 ? "row" : "column" }}
