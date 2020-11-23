@@ -6,6 +6,7 @@ import {
 	JobPosting,
 	setPostingListener,
 	postJob as postJobToStorageAndDatabase,
+	updateMemberApplication,
 } from "../../utils/jobs";
 import { FormInput } from "../Login";
 
@@ -17,6 +18,7 @@ export default function PostJobs() {
 	const seasonRef = createRef<HTMLInputElement>();
 	const categoryRef = createRef<HTMLInputElement>();
 	const fileRef = createRef<HTMLInputElement>();
+	const applicationRef = createRef<HTMLInputElement>();
 
 	useEffect(() => {
 		const unsub = updateJobs();
@@ -65,6 +67,13 @@ export default function PostJobs() {
 		if (apiResponse.message[0] !== "S") setError(apiResponse.message);
 	};
 
+	const updateApplication = async () => {
+		if (!applicationRef.current || !applicationRef.current.files) return;
+		const newApplication = applicationRef.current.files[0];
+		const apiReturn = await updateMemberApplication(newApplication);
+		if (apiReturn.message[0] !== "S") setError(apiReturn.message);
+	};
+
 	const getYear = () => {
 		const currentDate = new Date(Date.now());
 		return currentDate.getFullYear();
@@ -72,8 +81,10 @@ export default function PostJobs() {
 
 	if (error) {
 		return (
-			<div id="post-jobs" className="content-wrapper">
-				<p className="error">{error}</p>
+			<div id="post-jobs">
+				<div className="content-wrapper">
+					<p className="error">{error}</p>
+				</div>
 			</div>
 		);
 	}
@@ -137,6 +148,17 @@ export default function PostJobs() {
 							)}
 						</div>
 					))}
+			</div>
+
+			<div className="content-wrapper update-appliation">
+				<h2>Update Member Application</h2>
+				<hr className="blue-hr" />
+				<div className="form-input">
+					<input type="file" ref={applicationRef} />
+				</div>
+				<button onClick={updateApplication} className="btn btn-bold-blue">
+					SUBMIT
+				</button>
 			</div>
 		</div>
 	);

@@ -129,3 +129,32 @@ export const postJob = async (
 		};
 	}
 };
+
+export const updateMemberApplication = async (file: File): APIReturn<null> => {
+	try {
+		const applicationRef = firebase.storage().ref().child("application");
+		await applicationRef.put(file);
+		return {
+			message: "Application successfully uploaded.",
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};
+
+export const getApplicationDownloadLink = async (): APIReturn<string> => {
+	try {
+		const applicationRef = firebase.storage().ref().child("application");
+		const url = await applicationRef.getDownloadURL();
+		return {
+			message: "Success. Returning donwload url",
+			data: url,
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};
