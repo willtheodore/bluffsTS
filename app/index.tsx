@@ -18,6 +18,8 @@ const Tennis = React.lazy(() => import("./pages/Tennis"));
 const About = React.lazy(() => import("./pages/About"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const Members = React.lazy(() => import("./pages/Members"));
+const Jobs = React.lazy(() => import("./pages/Jobs"));
+const Application = React.lazy(() => import("./pages/Application"));
 const CheatSheet = React.lazy(() => import("./pages/CheatSheet"));
 
 const App: React.FC = () => {
@@ -85,6 +87,8 @@ const App: React.FC = () => {
 							<Route exact path="/tennis" component={Tennis} />
 							<Route exact path="/about" component={About} />
 							<Route exact path="/contact" component={Contact} />
+							<Route exact path="/jobs" component={Jobs} />
+							<Route exact path="/application" component={Application} />
 							<Route
 								exact
 								path="/composition-cheat-sheet"

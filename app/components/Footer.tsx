@@ -9,6 +9,8 @@ export default function Footer() {
 				<NavLink to="/tennis">Tennis</NavLink>
 				<NavLink to="/about">Social</NavLink>
 				<NavLink to="/contact">Contact</NavLink>
+				<NavLink to="/jobs">Jobs</NavLink>
+				<NavLink to="/application">Application</NavLink>
 			</ul>
 			<p>©Bedford Bluffs</p>
 		</div>

@@ -98,7 +98,7 @@ export default function EditPages({ user }: EditPagesProps) {
 				title="Page"
 				preSelected="Home"
 				setState={setPage}
-				items={["Home", "Swim", "Tennis", "Social", "Contact"]}
+				items={["Home", "Swim", "Tennis", "Social", "Contact", "Jobs"]}
 			/>
 			<div className="content-wrapper">
 				<Link to="/composition-cheat-sheet">

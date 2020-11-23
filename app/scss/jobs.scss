@@ -1,0 +1,75 @@
+@import "./fonts.scss";
+@import "./colors.scss";
+
+#jobs {
+	margin: 100px 20px;
+
+	.error {
+		display: block;
+		color: $lightBlue;
+		margin: 20px 0;
+		font-weight: normal;
+		font-family: "heebo-bold";
+	}
+	hr {
+		color: $lightBlue;
+		border: none;
+		border-bottom: 2px solid;
+	}
+	h1 {
+		font-family: "heebo-bold";
+		font-size: 48px;
+	}
+
+	.info {
+		padding-bottom: 10px;
+	}
+
+	.job-postings {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+	.posting-detail {
+		margin-top: 20px;
+
+		b {
+			font-family: "heebo-bold";
+			font-weight: normal;
+		}
+		p {
+			background-color: $darkBlue;
+			color: white;
+			padding: 8px 16px;
+			border-radius: 5px;
+			margin-right: 10px;
+		}
+		h2 {
+			font-family: "heebo-regular";
+			font-size: 32px;
+		}
+		hr {
+			width: 150px;
+			margin: 0;
+		}
+		button {
+			margin: 10px;
+			margin-left: 0;
+		}
+
+		.detail-info {
+			display: flex;
+			align-items: flex-start;
+			flex-direction: column;
+		}
+		.tags {
+			display: flex;
+		}
+
+		.link {
+			margin: 10px 0 0;
+		}
+	}
+}
