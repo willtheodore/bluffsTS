@@ -426,3 +426,19 @@ export const changeMemberCode = async (code: string): APIReturn<null> => {
 		};
 	}
 };
+
+export const deleteAccountByUid = async (uid: string) => {
+	try {
+		const user = firebase.auth().currentUser;
+		await user!.delete();
+		await firestore.collection("users").doc(uid).delete();
+
+		return {
+			message: "Success. User has been deleted from the system.",
+		};
+	} catch (e) {
+		return {
+			message: `Encountered error: ${e.message}`,
+		};
+	}
+};

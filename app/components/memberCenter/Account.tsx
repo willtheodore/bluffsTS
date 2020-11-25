@@ -1,22 +1,54 @@
 import * as React from "react";
 import { createRef, useContext, useState } from "react";
 import AuthContext from "../../contexts/auth";
-import { BluffsUser, updateUserValues } from "../../utils/users";
+import {
+	BluffsUser,
+	deleteAccountByUid,
+	updateUserValues,
+} from "../../utils/users";
 
 export default function Account() {
-	const handleDelete = () => {};
+	const user: BluffsUser = useContext(AuthContext);
+	const [error, setError] = useState<string | null>();
+	const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+
+	const handleDelete = async () => {
+		const apiResponse = await deleteAccountByUid(user.uid);
+		if (apiResponse.message[0] !== "S") setError(apiResponse.message);
+	};
 
 	return (
 		<div id="account" className="content-wrapper">
-			<EditField label="Display Name" propertyName="displayName" />
-			<EditField label="Email" propertyName="email" />
-			<EditField label="New Password" propertyName="password" confirm />
-			<button
-				onClick={handleDelete}
-				className="btn btn-bold-red delete-account"
-			>
-				DELETE THIS ACCOUNT
-			</button>
+			{error ? (
+				<p className="error">{error}</p>
+			) : (
+				<>
+					<EditField label="Display Name" propertyName="displayName" />
+					<EditField label="Email" propertyName="email" />
+					<EditField label="New Password" propertyName="password" confirm />
+
+					{confirmDelete ? (
+						<div className="delete-account">
+							<button
+								onClick={() => setConfirmDelete(false)}
+								className="btn btn-light-muted"
+							>
+								BACK
+							</button>
+							<button onClick={handleDelete} className="btn btn-bold-red">
+								CONFIRM
+							</button>
+						</div>
+					) : (
+						<button
+							onClick={() => setConfirmDelete(true)}
+							className="btn btn-bold-red delete-account"
+						>
+							DELETE THIS ACCOUNT
+						</button>
+					)}
+				</>
+			)}
 		</div>
 	);
 }
