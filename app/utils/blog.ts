@@ -377,6 +377,7 @@ export const getPostsByUserId = async (id: string): APIReturn<FSPost[]> => {
 				...postData,
 			});
 		});
+
 		return {
 			message: `Success. Posts from author with id ${id} have been returned.`,
 			data: result,

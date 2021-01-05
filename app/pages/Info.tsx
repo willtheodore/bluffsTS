@@ -4,6 +4,7 @@ import poolHeader from "../images/swimImage.jpg";
 import tennisHeader from "../images/tennisHeader.jpg";
 import poolBody from "../images/bodyImage.jpg";
 import tennisBody from "../images/tennisBody.jpg";
+import Header from "../components/Header";
 import useCloudContent from "../hooks/useCloudContent";
 
 interface InfoProps {
@@ -18,7 +19,7 @@ export default function Info({ alignment, title }: InfoProps) {
 		return (
 			<>
 				<div className="header-text">
-					<h1>{title.toUpperCase()}</h1>
+					<Header text={title} />
 					{title === "swim" ? (
 						<p className="content-wrapper">
 							Our pool is at the heart of the bluffs experience. Kids and adults

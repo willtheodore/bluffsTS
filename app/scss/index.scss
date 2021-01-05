@@ -19,6 +19,10 @@ html {
 	cursor: default;
 }
 
+.tennis-header {
+	margin-left: 20px;
+}
+
 .blue-hr {
 	color: $lightBlue;
 	border: none;
@@ -31,6 +35,12 @@ html {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.bluffs-logo {
+	resize: both;
+	height: 80px;
+	margin: 10px 20px;
 }
 
 textarea:focus {

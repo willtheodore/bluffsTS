@@ -110,6 +110,12 @@
 
 	.header-text {
 		grid-column: 2/3;
+
+		.header-comp {
+			h1 {
+				margin-left: 40px;
+			}
+		}
 	}
 
 	.body-wrapper {

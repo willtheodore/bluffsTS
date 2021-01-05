@@ -7,6 +7,7 @@ import { signOut } from "../utils/authentication";
 import { BluffsUser } from "../utils/users";
 
 import VerticalLine from "../vectors/VerticalLine";
+import BluffsLogo from "../vectors/bluffs-logo-white.svg";
 import Login from "./Login";
 
 const activeStyle = {
@@ -47,6 +48,7 @@ export default function Nav() {
 				<div className="logotype">
 					<NavLink to="/">Bedford Bluffs</NavLink>
 					<VerticalLine />
+					<img className="bluffs-logo" src={BluffsLogo} alt="Logo" />
 				</div>
 
 				<ul>

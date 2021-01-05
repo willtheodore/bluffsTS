@@ -36,9 +36,8 @@
 	border-width: 2px;
 	border-color: $darkBlue;
 	border-style: solid;
-	position: fixed;
-	top: 250px;
-	left: calc(50% - calc(max(50vw, 400px) / 2));
+	margin-top: 100px;
+	margin-left: calc(50% - calc(max(50vw, 400px) / 2));
 	z-index: 101;
 }
 
