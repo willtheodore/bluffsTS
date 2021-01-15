@@ -16,7 +16,22 @@
 		margin: 0 20px 400px;
 
 		h2 {
-			@include header-medium;
+			font-family: "heebo-bold";
+			font-size: 36px;
+		}
+
+		h6 {
+			font-family: "heebo-regular";
+			font-size: 36px;
+		}
+
+		a {
+			color: $lightBlue;
+		}
+
+		a:hover {
+			text-decoration: underline $lightBlue;
+			text-decoration-thickness: 3px;
 		}
 	}
 }

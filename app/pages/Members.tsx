@@ -37,7 +37,12 @@ export default function Members() {
 			<div id="members-wrapper">
 				<Header text="members" />
 				<div className="content-wrapper">
-					<h2>Please login to view this page.</h2>
+					<h2>This page can only be viewed by members who are logged in.</h2>
+					<h6>
+						To learn more about becoming a member, please view our{" "}
+						<a href="/application"> application </a>
+						or visit our <a href="/contact">contact page.</a>
+					</h6>
 				</div>
 			</div>
 		);
